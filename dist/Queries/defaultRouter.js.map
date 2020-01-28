@@ -1,0 +1,1 @@
+{"version":3,"file":"defaultRouter.js","sourceRoot":"","sources":["../../src/Queries/defaultRouter.ts"],"names":[],"mappings":";;AAAA,qCAAiC;AACjC,MAAM,aAAa,GAAG,gBAAM,EAAE,CAAC;AAC/B,aAAa,CAAC,GAAG,CAAC,GAAG,EAAE,CAAE,GAAG,EAAE,GAAG,EAAG,EAAE;IAClC,GAAG,CAAC,IAAI,CAAE,6BAA6B,CAAE,CAAC;AAC9C,CAAC,CAAC,CAAC;AACH,kBAAe,aAAa,CAAC"}
