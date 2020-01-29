@@ -44,11 +44,11 @@ let FunctionResolver = class FunctionResolver {
             const STMInvoker = new ActionInvoker_1.ActionInvoker();
             STMInvoker.setAction(FunctionHandler);
             const rec = new FunctionObject_1.FunctionObject();
-            rec.EnterpriseID = Input.EnterpriseID;
             rec.DVObject = new FunctionScalar_1.FunctionScalar();
             rec.RequestID = Input.RequestID;
             rec.DVObject.DVOBJ = yield STMInvoker.doInvokeAction();
-            console.log("Responsed to query function ");
+            rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
+            console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
             return rec;
         });
     }

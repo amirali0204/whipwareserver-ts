@@ -30,11 +30,11 @@ export class FunctionResolver {
     STMInvoker.setAction(FunctionHandler);
 
     const rec = new FunctionObject();
-    rec.EnterpriseID = Input.EnterpriseID;
     rec.DVObject = new FunctionScalar();
     rec.RequestID = Input.RequestID;
     rec.DVObject.DVOBJ  = await STMInvoker.doInvokeAction();
-    console.log("Responsed to query function ");
+    rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
+    console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
     return rec;
   }
   @Mutation((returns) => FunctionObject)

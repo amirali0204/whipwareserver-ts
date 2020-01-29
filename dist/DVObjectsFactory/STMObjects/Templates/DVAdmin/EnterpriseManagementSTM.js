@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const STMAction_1 = require("../../../../DVActionsDecorator/STMActions/STMAction");
 exports.m_EnterpriseManagement = {
     id: "EnterpriseManagement",
-    initial: "DBActions",
+    initial: "Function",
     states: {
-        DBActions: {
+        Function: {
             on: {
                 CREATE: {
                     target: "created",
@@ -29,10 +29,10 @@ exports.m_EnterpriseManagement = {
                     actions: ["DeleteEnterprise"]
                 },
                 FIND: {
-                    target: "fetch",
+                    target: "fetch"
                 },
                 FindByName: {
-                    target: "fetch",
+                    target: "fetch"
                 }
             }
         },
@@ -40,7 +40,7 @@ exports.m_EnterpriseManagement = {
             invoke: {
                 id: "getUser",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
-                    context = yield STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+                    context = yield STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
                     console.log(context);
                 }),
                 onDone: {
@@ -71,19 +71,19 @@ exports.m_EnterpriseManagementActions = {
     actions: {
         // action implementations
         CreateEnterprise: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
         },
         UpdateEnterprise: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
         },
         DeleteEnterprise: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
         },
         FindEnterprise: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
         },
         FindEnterpriseByName: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
         }
     }
 };

@@ -23,8 +23,7 @@ export class STMActions implements ActionInterface {
             const m_STMActions = new STMActions(obj.type, m_STMAction, m_Function); // Action to be defined here
             actionInvoker.setAction(m_STMActions);
             context[m_Function] = await actionInvoker.doInvokeAction();
-        }
-        else if (actionType === "RulesAction") {
+        } else if (actionType === "RulesAction") {
             const m_RulesActions = new RulesAction(obj.type, context, m_Function);
             actionInvoker.setAction(m_RulesActions);
             const rulename = "isLoggedIn";

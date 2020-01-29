@@ -45,11 +45,10 @@ class DBActions {
             const Schamatable = mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().model(this.m_Function, m_schema);
             switch (this.SysAction.toUpperCase()) {
                 case DBActionENUM_1.DBActionENUM.CREATE: {
-                    //  console.log("Creating = " + this.m_Function);
                     const dvid = "DVID";
                     this.InputObject[dvid] = uuid();
-                    const NewEnterprise = new Schamatable(this.InputObject);
-                    NewEnterprise.save();
+                    const NewRecord = new Schamatable(this.InputObject);
+                    NewRecord.save();
                     break;
                 }
                 case DBActionENUM_1.DBActionENUM.UPDATE: {
@@ -62,8 +61,6 @@ class DBActions {
                         this.OutputObject = result;
                         console.log("EXEC FIND Query for Function - " + this.m_Function);
                     });
-                    // console.log("FIND Query for Function - " + this.m_Function);
-                    // console.log(JSON.stringify(this.OutputObject));
                     break;
                 }
                 case DBActionENUM_1.DBActionENUM.DELETE: {
@@ -72,7 +69,7 @@ class DBActions {
                 }
                 default: {
                     // here it should not come its an error or security issue
-                    console.log("EnterpriseManagement Custom function called" + this.SysAction);
+                    console.log("Here all Custom function Handled" + this.SysAction);
                     break;
                 }
             }

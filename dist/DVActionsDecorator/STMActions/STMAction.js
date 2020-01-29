@@ -21,7 +21,7 @@ class STMActions {
         this.Action = action;
         this.InputObject = Input;
     }
-    static ExecuteAction(m_Function, context, event, actionType) {
+    static ExecuteAction(m_Function, context, event, actionType, m_STMAction) {
         return __awaiter(this, void 0, void 0, function* () {
             const actionInvoker = new ActionInvoker_1.ActionInvoker();
             const obj = JSON.parse(JSON.stringify(event));
@@ -33,16 +33,16 @@ class STMActions {
                 context[m_Function] = yield actionInvoker.doInvokeAction();
             }
             else if (actionType === "STMAction") {
-                const m_STMActions = new STMActions(obj.type, "", m_Function); // Action to be defined here
+                const m_STMActions = new STMActions(obj.type, m_STMAction, m_Function); // Action to be defined here
                 actionInvoker.setAction(m_STMActions);
                 context[m_Function] = yield actionInvoker.doInvokeAction();
             }
-            //  } else if (actionType === "RulesAction") {
-            const m_RulesActions = new RulesAction_1.RulesAction(obj.type, context, m_Function);
-            actionInvoker.setAction(m_RulesActions);
-            const rulename = "isLoggedIn";
-            context[rulename] = yield actionInvoker.doInvokeAction();
-            //  }
+            else if (actionType === "RulesAction") {
+                const m_RulesActions = new RulesAction_1.RulesAction(obj.type, context, m_Function);
+                actionInvoker.setAction(m_RulesActions);
+                const rulename = "isLoggedIn";
+                context[rulename] = yield actionInvoker.doInvokeAction();
+            }
             return context;
         });
     }
@@ -69,7 +69,6 @@ class STMActions {
                 console.log(promiseService.initialState.nextEvents);
                 promiseService.send(this.Action);
             });
-            //  await new Promise((resolve, reject) => setTimeout(resolve, 500));
             this.OutputObject = { response: "result from machine" };
             console.log(`StateMachine Executed for Function:(${this.Function})`);
             return this.InputObject;

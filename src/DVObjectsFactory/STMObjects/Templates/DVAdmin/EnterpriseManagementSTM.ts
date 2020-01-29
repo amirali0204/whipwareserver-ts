@@ -1,9 +1,9 @@
 import {STMActions} from "../../../../DVActionsDecorator/STMActions/STMAction";
 export const m_EnterpriseManagement = {
         id: "EnterpriseManagement",
-        initial: "DBActions",
+        initial: "Function",
         states: {
-          DBActions: {
+          Function: {
                 on: {
                     CREATE: {
                       target: "created",
@@ -59,19 +59,19 @@ export const  m_EnterpriseManagementActions =  {
     actions: {
       // action implementations
       CreateEnterprise:  (context, event) => {
-        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
       },
       UpdateEnterprise : (context, event) => {
-        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
       },
       DeleteEnterprise : (context, event) => {
-        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
       },
       FindEnterprise : (context, event) => {
-        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
       },
       FindEnterpriseByName : (context, event) => {
-        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+        STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
       }
 
     }

@@ -34,11 +34,10 @@ export class DBActions implements ActionInterface {
 
         switch (this.SysAction.toUpperCase()) {
             case DBActionENUM.CREATE: {
-              //  console.log("Creating = " + this.m_Function);
                 const dvid = "DVID";
                 this.InputObject[dvid] = uuid();
-                const NewEnterprise = new Schamatable(this.InputObject);
-                NewEnterprise.save();
+                const NewRecord = new Schamatable(this.InputObject);
+                NewRecord.save();
                 break;
             }
             case DBActionENUM.UPDATE: {
@@ -51,8 +50,6 @@ export class DBActions implements ActionInterface {
                     this.OutputObject = result;
                     console.log("EXEC FIND Query for Function - " + this.m_Function);
                 });
-               // console.log("FIND Query for Function - " + this.m_Function);
-               // console.log(JSON.stringify(this.OutputObject));
                 break;
             }
             case DBActionENUM.DELETE: {
@@ -61,7 +58,7 @@ export class DBActions implements ActionInterface {
             }
             default: {
                 // here it should not come its an error or security issue
-                console.log("EnterpriseManagement Custom function called" + this.SysAction);
+                console.log("Here all Custom function Handled" + this.SysAction);
                 break;
             }
         }
