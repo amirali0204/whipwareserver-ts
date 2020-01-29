@@ -39,12 +39,17 @@ exports.m_EnterpriseManagement = {
         fetch: {
             invoke: {
                 id: "getUser",
-                src: (context, event) => __awaiter(void 0, void 0, void 0, function* () { return yield STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction"); }),
+                src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
+                    context = yield STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction");
+                    console.log(context);
+                }),
                 onDone: {
-                    target: "fetched",
+                    target: "fetched"
+                    //  actions: assign({ user: (context, event) => event.data })
                 },
                 onError: {
-                    target: "fetched",
+                    target: "fetched"
+                    //  actions: assign({ error: (context, event) => event.data })
                 }
             }
         },

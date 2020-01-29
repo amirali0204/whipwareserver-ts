@@ -5,20 +5,30 @@ import {STMObjectCreator} from "../../DVObjectsFactory/STMObjects/STMObjectCreat
 import {ActionInterface} from "../ActionInterface";
 import { ActionInvoker } from "../ActionInvoker";
 import {DBActions} from "../DBActions/DBActions";
+import { RulesAction } from "../RulesActions/RulesAction";
 
 export class STMActions implements ActionInterface {
-    public static async ExecuteAction(m_Function: string, context: object, event: object, actionType: string): Promise<object | undefined> {
+    public static async ExecuteAction(m_Function: string, context: object, event: object, actionType: string, m_STMAction: string): Promise<object | undefined> {
         const actionInvoker = new ActionInvoker();
         const obj = JSON.parse(JSON.stringify(event));
+
         console.log("Event Occured - " + obj.type + " of type - " + actionType + " for Function - " + m_Function);
         console.log("object context - " + JSON.stringify(context) );
-
-        // create dbaction and invoke
 
         if (actionType === "DBAction") {
             const m_DBActions = new DBActions(obj.type, context, m_Function);
             actionInvoker.setAction(m_DBActions);
-            context = await actionInvoker.doInvokeAction();
+            context[m_Function] = await actionInvoker.doInvokeAction();
+        } else if (actionType === "STMAction") {
+            const m_STMActions = new STMActions(obj.type, m_STMAction, m_Function); // Action to be defined here
+            actionInvoker.setAction(m_STMActions);
+            context[m_Function] = await actionInvoker.doInvokeAction();
+        }
+        else if (actionType === "RulesAction") {
+            const m_RulesActions = new RulesAction(obj.type, context, m_Function);
+            actionInvoker.setAction(m_RulesActions);
+            const rulename = "isLoggedIn";
+            context[rulename] = await actionInvoker.doInvokeAction();
         }
         return context;
     }
@@ -45,15 +55,18 @@ export class STMActions implements ActionInterface {
         const promise = new Promise<string>((resolve, reject) => {
 
         });
-        const promiseService = interpret(machine).onTransition((context) => {
-                console.log(context.context);
-               // console.log("Completed the execution rettttt");
-            }
-          ); // .onTransition((state) => console.log(state.value));
-        promiseService.start();
-        console.log(promiseService.initialState.nextEvents);
-        promiseService.send(this.Action);
-        await new Promise((resolve, reject) => setTimeout(resolve, 500));
+        await new Promise((resolve, reject) => {
+            const promiseService = interpret(machine).onTransition((context) => {
+                    console.log(context.value);
+                    if (context.done) {
+                        resolve();
+                    }
+                }
+            );
+            promiseService.start();
+            console.log(promiseService.initialState.nextEvents);
+            promiseService.send(this.Action);
+        });
         this.OutputObject = { response: "result from machine"};
         console.log(`StateMachine Executed for Function:(${this.Function})`);
         return this.InputObject;

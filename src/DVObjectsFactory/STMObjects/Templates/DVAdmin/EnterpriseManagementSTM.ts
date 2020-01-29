@@ -18,25 +18,25 @@ export const m_EnterpriseManagement = {
                       actions: ["DeleteEnterprise"]
                     },
                     FIND: {
-                      target: "fetch",
-                    //  actions: ["FindEnterprise"]
+                      target: "fetch"
                     },
                     FindByName: {
-                      target: "fetch",
-                    //  actions: ["FindEnterpriseByName"]
+                      target: "fetch"
                     }
                 }
             },
             fetch: {
               invoke: {
                 id: "getUser",
-                src: async (context, event) => await STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction"),
+                src: async (context, event) => {context = await STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
+                                                console.log(context);
+                },
                 onDone: {
-                  target: "fetched",
+                  target: "fetched"
                 //  actions: assign({ user: (context, event) => event.data })
                 },
                 onError: {
-                  target: "fetched",
+                  target: "fetched"
                 //  actions: assign({ error: (context, event) => event.data })
                }
               }

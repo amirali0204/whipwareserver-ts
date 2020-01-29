@@ -33,7 +33,7 @@ class DBActions {
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(`DBAction: (${this.SysAction}) for the function : (${this.m_Function})`);
-            console.log("Input Data- " + JSON.stringify(this.InputObject));
+            //   console.log("Input Data- " + JSON.stringify(this.InputObject));
             let DVObjectsFactory;
             DVObjectsFactory = new DBObjectCreator_1.DBObjectCreator(this.m_Function);
             let dbObject = {};
@@ -45,7 +45,7 @@ class DBActions {
             const Schamatable = mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().model(this.m_Function, m_schema);
             switch (this.SysAction.toUpperCase()) {
                 case DBActionENUM_1.DBActionENUM.CREATE: {
-                    console.log("Creating = " + this.m_Function);
+                    //  console.log("Creating = " + this.m_Function);
                     const dvid = "DVID";
                     this.InputObject[dvid] = uuid();
                     const NewEnterprise = new Schamatable(this.InputObject);
@@ -62,8 +62,8 @@ class DBActions {
                         this.OutputObject = result;
                         console.log("EXEC FIND Query for Function - " + this.m_Function);
                     });
-                    console.log("FIND Query for Function - " + this.m_Function);
-                    console.log(JSON.stringify(this.OutputObject));
+                    // console.log("FIND Query for Function - " + this.m_Function);
+                    // console.log(JSON.stringify(this.OutputObject));
                     break;
                 }
                 case DBActionENUM_1.DBActionENUM.DELETE: {

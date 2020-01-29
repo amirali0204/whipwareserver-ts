@@ -14,6 +14,7 @@ const STMActionCreator_1 = require("../../DVObjectsFactory/STMObjects/STMActionC
 const STMObjectCreator_1 = require("../../DVObjectsFactory/STMObjects/STMObjectCreator");
 const ActionInvoker_1 = require("../ActionInvoker");
 const DBActions_1 = require("../DBActions/DBActions");
+const RulesAction_1 = require("../RulesActions/RulesAction");
 class STMActions {
     constructor(m_function, action, Input) {
         this.Function = m_function;
@@ -26,12 +27,22 @@ class STMActions {
             const obj = JSON.parse(JSON.stringify(event));
             console.log("Event Occured - " + obj.type + " of type - " + actionType + " for Function - " + m_Function);
             console.log("object context - " + JSON.stringify(context));
-            // create dbaction and invoke
             if (actionType === "DBAction") {
                 const m_DBActions = new DBActions_1.DBActions(obj.type, context, m_Function);
                 actionInvoker.setAction(m_DBActions);
-                context = yield actionInvoker.doInvokeAction();
+                context[m_Function] = yield actionInvoker.doInvokeAction();
             }
+            else if (actionType === "STMAction") {
+                const m_STMActions = new STMActions(obj.type, "", m_Function); // Action to be defined here
+                actionInvoker.setAction(m_STMActions);
+                context[m_Function] = yield actionInvoker.doInvokeAction();
+            }
+            //  } else if (actionType === "RulesAction") {
+            const m_RulesActions = new RulesAction_1.RulesAction(obj.type, context, m_Function);
+            actionInvoker.setAction(m_RulesActions);
+            const rulename = "isLoggedIn";
+            context[rulename] = yield actionInvoker.doInvokeAction();
+            //  }
             return context;
         });
     }
@@ -47,14 +58,18 @@ class STMActions {
             const machine = stm.withContext(this.InputObject);
             const promise = new Promise((resolve, reject) => {
             });
-            const promiseService = xstate_1.interpret(machine).onTransition((context) => {
-                console.log(context.context);
-                // console.log("Completed the execution rettttt");
-            }); // .onTransition((state) => console.log(state.value));
-            promiseService.start();
-            console.log(promiseService.initialState.nextEvents);
-            promiseService.send(this.Action);
-            yield new Promise((resolve, reject) => setTimeout(resolve, 500));
+            yield new Promise((resolve, reject) => {
+                const promiseService = xstate_1.interpret(machine).onTransition((context) => {
+                    console.log(context.value);
+                    if (context.done) {
+                        resolve();
+                    }
+                });
+                promiseService.start();
+                console.log(promiseService.initialState.nextEvents);
+                promiseService.send(this.Action);
+            });
+            //  await new Promise((resolve, reject) => setTimeout(resolve, 500));
             this.OutputObject = { response: "result from machine" };
             console.log(`StateMachine Executed for Function:(${this.Function})`);
             return this.InputObject;

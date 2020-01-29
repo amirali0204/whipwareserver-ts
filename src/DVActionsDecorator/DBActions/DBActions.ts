@@ -21,7 +21,7 @@ export class DBActions implements ActionInterface {
     }
     public async execute(): Promise<object | undefined> {
         console.log(`DBAction: (${this.SysAction}) for the function : (${this.m_Function})`);
-        console.log("Input Data- " + JSON.stringify(this.InputObject));
+     //   console.log("Input Data- " + JSON.stringify(this.InputObject));
         let DVObjectsFactory: DVObjectCreator;
         DVObjectsFactory = new DBObjectCreator(this.m_Function);
         let dbObject = {};
@@ -34,7 +34,7 @@ export class DBActions implements ActionInterface {
 
         switch (this.SysAction.toUpperCase()) {
             case DBActionENUM.CREATE: {
-                console.log("Creating = " + this.m_Function);
+              //  console.log("Creating = " + this.m_Function);
                 const dvid = "DVID";
                 this.InputObject[dvid] = uuid();
                 const NewEnterprise = new Schamatable(this.InputObject);
@@ -51,8 +51,8 @@ export class DBActions implements ActionInterface {
                     this.OutputObject = result;
                     console.log("EXEC FIND Query for Function - " + this.m_Function);
                 });
-                console.log("FIND Query for Function - " + this.m_Function);
-                console.log(JSON.stringify(this.OutputObject));
+               // console.log("FIND Query for Function - " + this.m_Function);
+               // console.log(JSON.stringify(this.OutputObject));
                 break;
             }
             case DBActionENUM.DELETE: {
