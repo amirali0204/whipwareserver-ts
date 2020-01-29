@@ -17,8 +17,6 @@ class RulesAction {
         this.SysAction = action;
         this.InputObject = Input;
         this.m_Function = c_function;
-        const dvid = "DVID";
-        this.identifier = Input[dvid];
     }
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -29,6 +27,7 @@ class RulesAction {
             const rules = new json_rules_engine_1.Rule(JSON.stringify(RuleObject));
             const engine = new json_rules_engine_1.Engine();
             engine.addRule(rules);
+            // build facts from Input Data
             const facts = {
                 personalFoulCount: 6,
                 gameDuration: 40

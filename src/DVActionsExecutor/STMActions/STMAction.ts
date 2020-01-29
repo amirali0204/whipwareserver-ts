@@ -16,13 +16,17 @@ export class STMActions implements ActionInterface {
         console.log("object context - " + JSON.stringify(context) );
 
         if (actionType === "DBAction") {
-            const m_DBActions = new DBActions(obj.type, context, m_Function);
+            const dvobj = "DVObject";
+            const dvob = "DVOBJ";
+            const m_DBActions = new DBActions(obj.type, context[dvobj][dvob], m_Function);
             actionInvoker.setAction(m_DBActions);
             context[m_Function] = await actionInvoker.doInvokeAction();
         } else if (actionType === "STMAction") {
-            const m_STMActions = new STMActions(obj.type, m_STMAction, m_Function); // Action to be defined here
+            const action = "Action";
+            const m_STMActions = new STMActions(m_Function, context[action], context);
             actionInvoker.setAction(m_STMActions);
-            context[m_Function] = await actionInvoker.doInvokeAction();
+            // context[m_Function] =
+            await actionInvoker.doInvokeAction();
         } else if (actionType === "RulesAction") {
             const m_RulesActions = new RulesAction(obj.type, context, m_Function);
             actionInvoker.setAction(m_RulesActions);
@@ -42,7 +46,9 @@ export class STMActions implements ActionInterface {
         this.InputObject = Input;
     }
     public async execute(): Promise<object | undefined> {
-        console.log(`StateMachine Execution for Function:(${this.Function})`);
+    //    console.log(`StateMachine Execution for Function:(${this.Function})`);
+    //    console.log(`StateMachine Execution with Action:(${this.Action})`);
+    //    console.log(`StateMachine Execution for Input:(${JSON.stringify(this.InputObject)})`);
         let DVObjectsFactory: DVObjectCreator;
         DVObjectsFactory = new STMObjectCreator(this.Function);
         const dvMachine = DVObjectsFactory.createObject();
@@ -63,7 +69,7 @@ export class STMActions implements ActionInterface {
             console.log(promiseService.initialState.nextEvents);
             promiseService.send(this.Action);
         });
-        this.OutputObject = { response: "result from machine"};
+       // this.OutputObject = { response: "result from machine"};
         console.log(`StateMachine Executed for Function:(${this.Function})`);
         return this.InputObject;
     }

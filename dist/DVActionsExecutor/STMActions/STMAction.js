@@ -28,14 +28,18 @@ class STMActions {
             console.log("Event Occured - " + obj.type + " of type - " + actionType + " for Function - " + m_Function);
             console.log("object context - " + JSON.stringify(context));
             if (actionType === "DBAction") {
-                const m_DBActions = new DBActions_1.DBActions(obj.type, context, m_Function);
+                const dvobj = "DVObject";
+                const dvob = "DVOBJ";
+                const m_DBActions = new DBActions_1.DBActions(obj.type, context[dvobj][dvob], m_Function);
                 actionInvoker.setAction(m_DBActions);
                 context[m_Function] = yield actionInvoker.doInvokeAction();
             }
             else if (actionType === "STMAction") {
-                const m_STMActions = new STMActions(obj.type, m_STMAction, m_Function); // Action to be defined here
+                const action = "Action";
+                const m_STMActions = new STMActions(m_Function, context[action], context);
                 actionInvoker.setAction(m_STMActions);
-                context[m_Function] = yield actionInvoker.doInvokeAction();
+                // context[m_Function] =
+                yield actionInvoker.doInvokeAction();
             }
             else if (actionType === "RulesAction") {
                 const m_RulesActions = new RulesAction_1.RulesAction(obj.type, context, m_Function);
@@ -48,7 +52,9 @@ class STMActions {
     }
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`StateMachine Execution for Function:(${this.Function})`);
+            //    console.log(`StateMachine Execution for Function:(${this.Function})`);
+            //    console.log(`StateMachine Execution with Action:(${this.Action})`);
+            //    console.log(`StateMachine Execution for Input:(${JSON.stringify(this.InputObject)})`);
             let DVObjectsFactory;
             DVObjectsFactory = new STMObjectCreator_1.STMObjectCreator(this.Function);
             const dvMachine = DVObjectsFactory.createObject();
@@ -67,7 +73,7 @@ class STMActions {
                 console.log(promiseService.initialState.nextEvents);
                 promiseService.send(this.Action);
             });
-            this.OutputObject = { response: "result from machine" };
+            // this.OutputObject = { response: "result from machine"};
             console.log(`StateMachine Executed for Function:(${this.Function})`);
             return this.InputObject;
         });

@@ -82,10 +82,10 @@ class DBActions {
                         Querybuilder[arg] = this.InputObject[arg];
                     }
                     console.log("Generated Query Builder - " + JSON.stringify(Querybuilder));
-                    const query = Schamatable.findOne(Querybuilder);
+                    const query = Schamatable.find(Querybuilder);
                     yield query.then((result) => {
                         this.OutputObject = result;
-                        console.log("EXEC FIND Query for Function - " + this.m_Function);
+                        //     console.log("EXEC FIND Query for Function - " + this.m_Function);
                     });
                     break;
                 }

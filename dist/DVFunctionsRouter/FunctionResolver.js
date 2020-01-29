@@ -38,15 +38,30 @@ let FunctionResolver = class FunctionResolver {
             console.log(Input.DVObject);
             console.log(Input.RequestID);
             console.log(Input.DVObject.DVOBJ);
-            const FunctionHandler = new STMAction_1.STMActions(Input.FunctionID, Input.Action, Input.DVObject.DVOBJ);
+            // Validate the Input here
+            const DVRequest = {};
+            let type = "FunctionID";
+            DVRequest[type] = Input.FunctionID;
+            type = "Action";
+            DVRequest[type] = Input.Action;
+            type = "DVObject";
+            const type2 = "DVOBJ";
+            DVRequest[type] = {};
+            DVRequest[type][type2] = Input.DVObject.DVOBJ;
+            type = "Action";
+            DVRequest[type] = Input.Action;
+            type = "Response";
+            DVRequest[type] = {};
+            const FunctionHandler = new STMAction_1.STMActions("FunctionLauncher", "Launch", DVRequest);
             const STMInvoker = new ActionInvoker_1.ActionInvoker();
             STMInvoker.setAction(FunctionHandler);
             const rec = new FunctionObject_1.FunctionObject();
             rec.DVObject = new FunctionScalar_1.FunctionScalar();
             rec.RequestID = Input.RequestID;
             rec.DVObject.DVOBJ = yield STMInvoker.doInvokeAction();
+            // build response
             rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
-            console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
+            //  console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
             return rec;
         });
     }

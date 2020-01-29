@@ -23,7 +23,22 @@ export class FunctionResolver {
     console.log(Input.RequestID);
     console.log(Input.DVObject.DVOBJ);
 
-    const FunctionHandler = new STMActions(Input.FunctionID, Input.Action, Input.DVObject.DVOBJ);
+    // Validate the Input here
+    const DVRequest = {};
+    let type = "FunctionID";
+    DVRequest[type] = Input.FunctionID;
+    type = "Action";
+    DVRequest[type] = Input.Action;
+    type = "DVObject";
+    const type2 = "DVOBJ";
+    DVRequest[type] = {};
+    DVRequest[type][type2] = Input.DVObject.DVOBJ;
+    type = "Action";
+    DVRequest[type] = Input.Action;
+    type = "Response";
+    DVRequest[type] = {};
+
+    const FunctionHandler = new STMActions("FunctionLauncher", "Launch", DVRequest);
     const STMInvoker = new ActionInvoker();
     STMInvoker.setAction(FunctionHandler);
 
@@ -31,8 +46,9 @@ export class FunctionResolver {
     rec.DVObject = new FunctionScalar();
     rec.RequestID = Input.RequestID;
     rec.DVObject.DVOBJ  = await STMInvoker.doInvokeAction();
+    // build response
     rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
-    console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
+  //  console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
     return rec;
   }
   @Mutation((returns) => FunctionObject)

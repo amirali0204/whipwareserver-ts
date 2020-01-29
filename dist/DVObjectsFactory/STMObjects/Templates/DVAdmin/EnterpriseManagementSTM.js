@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const STMAction_1 = require("../../../../DVActionsExecutor/STMActions/STMAction");
 exports.m_EnterpriseManagement = {
     id: "EnterpriseManagement",
-    initial: "Function",
+    initial: "Actions",
     states: {
-        Function: {
+        Actions: {
             on: {
                 CREATE: {
                     target: "created",
@@ -33,6 +33,9 @@ exports.m_EnterpriseManagement = {
                 },
                 FindByName: {
                     target: "fetch"
+                },
+                FindByType: {
+                    target: "fetch"
                 }
             }
         },
@@ -41,7 +44,7 @@ exports.m_EnterpriseManagement = {
                 id: "getUser",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
                     context = yield STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
-                    console.log(context);
+                    console.log("Loaded- " + context);
                 }),
                 onDone: {
                     target: "fetched"

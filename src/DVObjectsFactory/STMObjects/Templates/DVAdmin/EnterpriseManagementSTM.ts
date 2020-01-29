@@ -1,9 +1,9 @@
 import {STMActions} from "../../../../DVActionsExecutor/STMActions/STMAction";
 export const m_EnterpriseManagement = {
         id: "EnterpriseManagement",
-        initial: "Function",
+        initial: "Actions",
         states: {
-          Function: {
+          Actions: {
                 on: {
                     CREATE: {
                       target: "created",
@@ -22,6 +22,9 @@ export const m_EnterpriseManagement = {
                     },
                     FindByName: {
                       target: "fetch"
+                    },
+                    FindByType: {
+                      target: "fetch"
                     }
                 }
             },
@@ -29,7 +32,7 @@ export const m_EnterpriseManagement = {
               invoke: {
                 id: "getUser",
                 src: async (context, event) => {context = await STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
-                                                console.log(context);
+                                                console.log("Loaded- " + context);
                 },
                 onDone: {
                   target: "fetched"
