@@ -1,4 +1,4 @@
-import {STMActions} from "../../../../DVActionsDecorator/STMActions/STMAction";
+import {STMActions} from "../../../../DVActionsExecutor/STMActions/STMAction";
 export const m_EnterpriseManagement = {
         id: "EnterpriseManagement",
         initial: "Function",

@@ -17,14 +17,12 @@ export class RulesAction implements ActionInterface {
     }
     public async execute(): Promise <object | undefined> {
         console.log(`RulesAction: (${this.SysAction}) for the function : (${this.m_Function})`);
-     //   console.log("Input Data- " + JSON.stringify(this.InputObject));
         let DVObjectsFactory: DVObjectCreator;
         DVObjectsFactory = new RulesObjectCreator("isLoggedIn");
         const RuleObject = DVObjectsFactory.createObject();
         const rules = new Rule(JSON.stringify(RuleObject));
         const engine = new Engine();
         engine.addRule(rules);
-      //  console.log("Rules Engine with Rule loaded - " + JSON.stringify(rules));
 
         const facts = {
             personalFoulCount: 6,

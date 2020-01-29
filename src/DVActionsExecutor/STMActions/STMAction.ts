@@ -51,9 +51,6 @@ export class STMActions implements ActionInterface {
         const dvMachineActions = DVObjectsFactory2.createObject();
         const stm = Machine(dvMachine, dvMachineActions  );
         const machine = stm.withContext(this.InputObject);
-        const promise = new Promise<string>((resolve, reject) => {
-
-        });
         await new Promise((resolve, reject) => {
             const promiseService = interpret(machine).onTransition((context) => {
                     console.log(context.value);

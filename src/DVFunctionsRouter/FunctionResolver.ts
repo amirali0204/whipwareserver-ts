@@ -4,8 +4,8 @@ import {
     Query,
     Resolver,
   } from "type-graphql";
-import {ActionInvoker} from "../DVActionsDecorator/ActionInvoker";
-import {STMActions} from "../DVActionsDecorator/STMActions/STMAction";
+import {ActionInvoker} from "../DVActionsExecutor/ActionInvoker";
+import {STMActions} from "../DVActionsExecutor/STMActions/STMAction";
 import {FunctionInput} from "./FunctionInput";
 import {FunctionObject} from "./FunctionObject";
 import { FunctionScalar } from "./FunctionScalar";
@@ -14,7 +14,6 @@ export class FunctionResolver {
 
   @Query((returns) => FunctionObject)
   public async QueryRouter(@Arg("dvObjectsdata") Input: FunctionInput): Promise<FunctionObject | undefined> {
-    // Query Method handler for DV
     console.log(Input.EnterpriseID);
     console.log(Input.FunctionID);
     console.log(Input.Action);
@@ -24,7 +23,6 @@ export class FunctionResolver {
     console.log(Input.RequestID);
     console.log(Input.DVObject.DVOBJ);
 
-// execute statemachine launcher here and respond
     const FunctionHandler = new STMActions(Input.FunctionID, Input.Action, Input.DVObject.DVOBJ);
     const STMInvoker = new ActionInvoker();
     STMInvoker.setAction(FunctionHandler);

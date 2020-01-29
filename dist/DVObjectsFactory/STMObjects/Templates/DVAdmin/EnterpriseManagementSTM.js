@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const STMAction_1 = require("../../../../DVActionsDecorator/STMActions/STMAction");
+const STMAction_1 = require("../../../../DVActionsExecutor/STMActions/STMAction");
 exports.m_EnterpriseManagement = {
     id: "EnterpriseManagement",
     initial: "Function",

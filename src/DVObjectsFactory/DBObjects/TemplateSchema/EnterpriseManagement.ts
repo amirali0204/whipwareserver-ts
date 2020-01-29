@@ -5,10 +5,14 @@ export const m_EnterpriseManagement = {
       State: String // lifecycle of an Enterprise need to design in STM
 };
 export const m_EnterpriseManagementQueries = {
-      findByName: {
-            EnterpriseName: String
+      FindByName: {
+            EnterpriseName: "EnterpriseNameValue"
       },
-      findByID: {
-            DVID: String
-      }
+      FindByNameArgs: [
+            "EnterpriseName"
+      ],
+      FindByType: {
+            Type: "TypeValue"
+      },
+      FindByTypeArgs: ["Type"]
 };

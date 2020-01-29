@@ -22,15 +22,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
-const ActionInvoker_1 = require("../DVActionsDecorator/ActionInvoker");
-const STMAction_1 = require("../DVActionsDecorator/STMActions/STMAction");
+const ActionInvoker_1 = require("../DVActionsExecutor/ActionInvoker");
+const STMAction_1 = require("../DVActionsExecutor/STMActions/STMAction");
 const FunctionInput_1 = require("./FunctionInput");
 const FunctionObject_1 = require("./FunctionObject");
 const FunctionScalar_1 = require("./FunctionScalar");
 let FunctionResolver = class FunctionResolver {
     QueryRouter(Input) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Query Method handler for DV
             console.log(Input.EnterpriseID);
             console.log(Input.FunctionID);
             console.log(Input.Action);
@@ -39,7 +38,6 @@ let FunctionResolver = class FunctionResolver {
             console.log(Input.DVObject);
             console.log(Input.RequestID);
             console.log(Input.DVObject.DVOBJ);
-            // execute statemachine launcher here and respond
             const FunctionHandler = new STMAction_1.STMActions(Input.FunctionID, Input.Action, Input.DVObject.DVOBJ);
             const STMInvoker = new ActionInvoker_1.ActionInvoker();
             STMInvoker.setAction(FunctionHandler);

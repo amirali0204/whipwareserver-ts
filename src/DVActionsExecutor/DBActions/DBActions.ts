@@ -2,6 +2,7 @@ import * as mongoose from "mongoose";
 import uuid = require("uuid");
 import {MongoSingleton} from "../../DVBuilder/mongooseSingleton";
 import {DBObjectCreator} from "../../DVObjectsFactory/DBObjects/DBObjectCreator";
+import {DBObjectQueriesCreator} from "../../DVObjectsFactory/DBObjects/DBObjectQueriesCreator";
 import {DVObjectCreator} from "../../DVObjectsFactory/DVObjectCreator";
 import {ActionInterface} from "../ActionInterface";
 import { DBActionENUM } from "./DBActionENUM";
@@ -58,7 +59,23 @@ export class DBActions implements ActionInterface {
             }
             default: {
                 // here it should not come its an error or security issue
-                console.log("Here all Custom function Handled" + this.SysAction);
+                console.log("Here all Custom function Handled" + this.SysAction + "Queries");
+                let DVObjectsFactory_2: DVObjectCreator;
+                DVObjectsFactory_2 = new DBObjectQueriesCreator(this.m_Function + "Queries");
+                let allQueries = {};
+                allQueries = DVObjectsFactory_2.createObject();
+                console.log("This is the DB OBject query string - " + JSON.stringify(allQueries[this.SysAction]));
+                const Querybuilder = allQueries[this.SysAction];
+                const Argslist = allQueries[this.SysAction + "Args"];
+                for (const arg of Argslist) {
+                    Querybuilder[arg] = this.InputObject[arg];
+                }
+                console.log("Generated Query Builder - " + JSON.stringify(Querybuilder));
+                const query = Schamatable.findOne(Querybuilder);
+                await query.then(( result) => {
+                    this.OutputObject = result;
+                    console.log("EXEC FIND Query for Function - " + this.m_Function);
+                });
                 break;
             }
         }
