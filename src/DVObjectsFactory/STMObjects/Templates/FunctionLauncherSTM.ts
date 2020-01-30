@@ -5,17 +5,35 @@ export const m_FunctionLauncher = {
         states: {
           InputValidator: {
               on: {
-                Launch: "LaunchSTM"
+                Launch: "validateInput"
               }
           },
+          validateInput: {
+            invoke: {
+              id: "validateInput",
+              src: async (context, event) => {context = await STMActions.ExecuteAction("ValidateInput", context, event, "LibAction", "");
+                                              console.log(context);
+              },
+              onDone: {
+                target: "AuthenticateIdentity"
+              },
+              onError: {
+                target: "InputValidationFailed"
+             }
+            }
+          },
+          AuthenticateIdentity: {
+            on: {
+              "": "LaunchSTM"
+            }
+        },
           LaunchSTM: {
             invoke: {
                 id: "LaunchSTM",
-                src: async (context, event) => {context = await STMActions.ExecuteAction("EnterpriseManagement", context, event, "STMAction", "");
-                                                console.log(context);
+                src: async (context, event) => {context = await STMActions.ExecuteAction(context.FunctionID, context, event, "STMAction", "");
                 },
                 onDone: {
-                  target: "executed"
+                  target: "outputValidator"
                 },
                 onError: {
                   target: "executed"
@@ -24,6 +42,14 @@ export const m_FunctionLauncher = {
           },
           executed: {
             type: "final"
+          },
+          InputValidationFailed: {
+            type: "final"
+          },
+          outputValidator: {
+            on: {
+              "": "executed"
+            }
           }
         }
     };

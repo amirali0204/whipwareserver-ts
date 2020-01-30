@@ -41,7 +41,7 @@ exports.m_EnterpriseManagement = {
         },
         fetch: {
             invoke: {
-                id: "getUser",
+                id: "getEnterprise",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
                     context = yield STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
                     console.log("Loaded- " + context);

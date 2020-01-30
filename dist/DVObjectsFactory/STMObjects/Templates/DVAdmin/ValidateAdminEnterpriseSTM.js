@@ -9,46 +9,45 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const STMAction_1 = require("../../../DVActionsExecutor/STMActions/STMAction");
-exports.m_FunctionLauncher = {
-    id: "FunctionLauncher",
-    initial: "InputValidator",
+const STMAction_1 = require("../../../../DVActionsExecutor/STMActions/STMAction");
+exports.m_ValidateAdminEnterprise = {
+    id: "ValidateAdminEnterprise",
+    initial: "AdminEnterpriseValidator",
+    context: {},
     states: {
-        InputValidator: {
+        AdminEnterpriseValidator: {
             on: {
-                Launch: "validateInput"
+                Validate: "loadEnterprise"
             }
         },
-        validateInput: {
+        loadEnterprise: {
             invoke: {
-                id: "validateInput",
+                id: "loadEnterprise",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
-                    context = yield STMAction_1.STMActions.ExecuteAction("ValidateInput", context, event, "LibAction", "");
-                    console.log(context);
+                    context = yield STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, { type: "FindByType" }, "DBAction", "");
                 }),
                 onDone: {
-                    target: "AuthenticateIdentity"
+                    target: "DecisionAdmin"
                 },
                 onError: {
-                    target: "InputValidationFailed"
+                    target: "DecisionAdmin"
                 }
             }
         },
-        AuthenticateIdentity: {
-            on: {
-                "": "LaunchSTM"
-            }
-        },
-        LaunchSTM: {
+        DecisionAdmin: {
             invoke: {
-                id: "LaunchSTM",
+                id: "DecisionAdmin",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
-                    context = yield STMAction_1.STMActions.ExecuteAction(context.FunctionID, context, event, "STMAction", "");
+                    context = yield STMAction_1.STMActions.ExecuteAction("isAdminEnterpriseActive", context, event, "RulesAction", "");
                     console.log(context);
                 }),
-                onDone: {
-                    target: "outputValidator"
-                },
+                onDone: [{
+                        target: "executed",
+                        cond: (context, event) => context.isAdminEnterpriseActive.Response === "TRUE"
+                    }, {
+                        target: "InputValidationFailed",
+                        cond: (context, event) => context.isAdminEnterpriseActive.Response === "FALSE"
+                    }],
                 onError: {
                     target: "executed"
                 }
@@ -57,14 +56,12 @@ exports.m_FunctionLauncher = {
         executed: {
             type: "final"
         },
-        InputValidationFailed: {
+        outputValidator: {
             type: "final"
         },
-        outputValidator: {
-            on: {
-                "": "executed"
-            }
+        InputValidationFailed: {
+            type: "final"
         }
     }
 };
-//# sourceMappingURL=FunctionLauncherSTM.js.map
+//# sourceMappingURL=ValidateAdminEnterpriseSTM.js.map

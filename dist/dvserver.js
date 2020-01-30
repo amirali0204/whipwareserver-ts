@@ -44,6 +44,8 @@ const DVFunctionSchema_1 = require("./DVFunctionsRouter/DVFunctionSchema");
 // console.log(newobj.property2);
 function bootstrapGraph() {
     return __awaiter(this, void 0, void 0, function* () {
+        const dvBuilder = new ServiceBuilder_1.DVBuilder();
+        yield dvBuilder.validateAdminEnterprise();
         const schema = yield DVFunctionSchema_1.dvSchemaHandler;
         // Create GraphQL server
         const server = new apollo_server_1.ApolloServer({
@@ -58,8 +60,6 @@ function bootstrapGraph() {
 }
 // Build a local state machine for dv builder
 // configure the system with enterprise DB
-const dvBuilder = new ServiceBuilder_1.DVBuilder();
-dvBuilder.validateAdminEnterprise();
 // Admin system is configured now bootstrap the server for GraphAPI functions
 bootstrapGraph();
 // Web Socket to be initiated and initiated here for other services like Chat and Calling

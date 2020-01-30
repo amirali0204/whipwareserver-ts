@@ -46,7 +46,6 @@ export class FunctionResolver {
     rec.DVObject = new FunctionScalar();
     rec.RequestID = Input.RequestID;
     rec.DVObject.DVOBJ  = await STMInvoker.doInvokeAction();
-    // build response
     rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
   //  console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
     return rec;

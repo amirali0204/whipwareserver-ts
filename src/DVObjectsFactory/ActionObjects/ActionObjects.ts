@@ -1,6 +1,6 @@
 import {DVObjectInterface} from "../DVObjectInterface";
 import {DVActionObjects} from "./ActionObjectTemplates";
-export class DBObject implements DVObjectInterface {
+export class ActionObject implements DVObjectInterface {
     public objectID: string;
     constructor(ID: string) {
         this.objectID = ID;

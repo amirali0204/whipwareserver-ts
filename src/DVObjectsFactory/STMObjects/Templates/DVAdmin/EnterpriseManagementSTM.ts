@@ -30,7 +30,7 @@ export const m_EnterpriseManagement = {
             },
             fetch: {
               invoke: {
-                id: "getUser",
+                id: "getEnterprise",
                 src: async (context, event) => {context = await STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
                                                 console.log("Loaded- " + context);
                 },

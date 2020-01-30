@@ -5,6 +5,7 @@ import {STMObjectCreator} from "../../DVObjectsFactory/STMObjects/STMObjectCreat
 import {ActionInterface} from "../ActionInterface";
 import { ActionInvoker } from "../ActionInvoker";
 import {DBActions} from "../DBActions/DBActions";
+import {LibAction} from "../LibraryActions/LibActions";
 import { RulesAction } from "../RulesActions/RulesAction";
 
 export class STMActions implements ActionInterface {
@@ -25,13 +26,15 @@ export class STMActions implements ActionInterface {
             const action = "Action";
             const m_STMActions = new STMActions(m_Function, context[action], context);
             actionInvoker.setAction(m_STMActions);
-            // context[m_Function] =
             await actionInvoker.doInvokeAction();
         } else if (actionType === "RulesAction") {
             const m_RulesActions = new RulesAction(obj.type, context, m_Function);
             actionInvoker.setAction(m_RulesActions);
-            const rulename = "isLoggedIn";
-            context[rulename] = await actionInvoker.doInvokeAction();
+            context[m_Function] = await actionInvoker.doInvokeAction();
+        } else if (actionType === "LibAction") {
+            const m_RulesActions = new LibAction(obj.type, context, m_Function);
+            actionInvoker.setAction(m_RulesActions);
+            context[m_Function] = await actionInvoker.doInvokeAction();
         }
         return context;
     }

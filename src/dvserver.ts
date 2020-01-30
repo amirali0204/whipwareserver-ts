@@ -37,24 +37,26 @@ import {dvSchemaHandler} from "./DVFunctionsRouter/DVFunctionSchema";
 // console.log(newobj.property2);
 
 async function bootstrapGraph() {
-    const schema =  await dvSchemaHandler;
+  const dvBuilder = new DVBuilder();
+  await dvBuilder.validateAdminEnterprise();
+
+  const schema =  await dvSchemaHandler;
     // Create GraphQL server
-    const server = new ApolloServer({
+  const server = new ApolloServer({
         schema,
       // enable GraphQL Playground
       playground: true,
     });
 
     // Start the server
-    const { url } =  await server.listen(8081);
-    console.log(`Server is running, GraphQL Playground available at ${url} `);
+  const { url } =  await server.listen(8081);
+  console.log(`Server is running, GraphQL Playground available at ${url} `);
  }
 
  // Build a local state machine for dv builder
 
 // configure the system with enterprise DB
-const dvBuilder = new DVBuilder();
-dvBuilder.validateAdminEnterprise();
+
 // Admin system is configured now bootstrap the server for GraphAPI functions
 bootstrapGraph();
 // Web Socket to be initiated and initiated here for other services like Chat and Calling

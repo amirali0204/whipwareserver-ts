@@ -1,22 +1,20 @@
+import {ActionInvoker} from "../DVActionsExecutor/ActionInvoker";
+import {STMActions} from "../DVActionsExecutor/STMActions/STMAction";
+import {DVUUID} from "./DVConstants";
 export class DVBuilder {
     public DVBuilder() {}
-    public validateAdminEnterprise() {
+    public async validateAdminEnterprise() {
         // Validate the Admin Enterprise & Application is already created
-        // Generate UUID of Admin Enterprise
         // Admin Role is created
         // Admin user is also created: login password
         // ACL for Admin Role is created
-        // Custom Objects are created
-        // STMs are created
+        const dvobj =  {DVObject: { DVOBJ: { Type: "Admin"} }};
+        const FunctionHandler = new STMActions("ValidateAdminEnterprise", "Validate", dvobj);
+        const STMInvoker = new ActionInvoker();
+        STMInvoker.setAction(FunctionHandler);
+        const response = await STMInvoker.doInvokeAction();
+        console.log("This is validateAdminEnterprise" + JSON.stringify(response));
 
-        // AdminEnterprise.findOne({type: "Admin"}).exec(function(err, enterprise) {
-        //     if (err) { throw err; }
-        //     console.log(enterprise);
-        // });
         return 1;
-    }
-
-    public InitServices() {
-        // load functions / resolvers
     }
 }

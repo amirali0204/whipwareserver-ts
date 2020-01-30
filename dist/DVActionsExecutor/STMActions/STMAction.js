@@ -14,6 +14,7 @@ const STMActionCreator_1 = require("../../DVObjectsFactory/STMObjects/STMActionC
 const STMObjectCreator_1 = require("../../DVObjectsFactory/STMObjects/STMObjectCreator");
 const ActionInvoker_1 = require("../ActionInvoker");
 const DBActions_1 = require("../DBActions/DBActions");
+const LibActions_1 = require("../LibraryActions/LibActions");
 const RulesAction_1 = require("../RulesActions/RulesAction");
 class STMActions {
     constructor(m_function, action, Input) {
@@ -38,14 +39,17 @@ class STMActions {
                 const action = "Action";
                 const m_STMActions = new STMActions(m_Function, context[action], context);
                 actionInvoker.setAction(m_STMActions);
-                // context[m_Function] =
                 yield actionInvoker.doInvokeAction();
             }
             else if (actionType === "RulesAction") {
                 const m_RulesActions = new RulesAction_1.RulesAction(obj.type, context, m_Function);
                 actionInvoker.setAction(m_RulesActions);
-                const rulename = "isLoggedIn";
-                context[rulename] = yield actionInvoker.doInvokeAction();
+                context[m_Function] = yield actionInvoker.doInvokeAction();
+            }
+            else if (actionType === "LibAction") {
+                const m_RulesActions = new LibActions_1.LibAction(obj.type, context, m_Function);
+                actionInvoker.setAction(m_RulesActions);
+                context[m_Function] = yield actionInvoker.doInvokeAction();
             }
             return context;
         });
