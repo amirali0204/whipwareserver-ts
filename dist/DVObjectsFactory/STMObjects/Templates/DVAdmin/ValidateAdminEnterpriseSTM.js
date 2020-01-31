@@ -24,9 +24,10 @@ exports.m_ValidateAdminEnterprise = {
             invoke: {
                 id: "loadEnterprise",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
-                    context = yield STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, { type: "FindByType" }, "DBAction", "");
-                }),
-                onDone: {
+                    context.ExecutorFunction = "EnterpriseManagement";
+                    context.ExecutorAction = "FindByType";
+                    yield STMAction_1.STMActions.ExecuteAction("FunctionLauncher", context, {}, "STMActionLauncher", "");
+                }), onDone: {
                     target: "DecisionAdmin"
                 },
                 onError: {
@@ -39,13 +40,12 @@ exports.m_ValidateAdminEnterprise = {
                 id: "DecisionAdmin",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
                     context = yield STMAction_1.STMActions.ExecuteAction("isAdminEnterpriseActive", context, event, "RulesAction", "");
-                    console.log(context);
                 }),
                 onDone: [{
                         target: "executed",
                         cond: (context, event) => context.isAdminEnterpriseActive.Response === "TRUE"
                     }, {
-                        target: "InputValidationFailed",
+                        target: "CreateAdminEnterprise",
                         cond: (context, event) => context.isAdminEnterpriseActive.Response === "FALSE"
                     }],
                 onError: {
@@ -59,7 +59,7 @@ exports.m_ValidateAdminEnterprise = {
         outputValidator: {
             type: "final"
         },
-        InputValidationFailed: {
+        CreateAdminEnterprise: {
             type: "final"
         }
     }

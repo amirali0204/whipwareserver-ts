@@ -3,7 +3,6 @@ import { DVObjectInterface } from "../DVObjectInterface";
 import {ActionObject} from "./ActionObjects";
 export class ActionObjectCreator extends DVObjectCreator {
     public ID: string;
-    public DVOBJ: object;
     constructor(objectid: string) {
         super();
         this.ID = objectid;

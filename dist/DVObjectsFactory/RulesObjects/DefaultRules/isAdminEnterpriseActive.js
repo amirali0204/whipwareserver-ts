@@ -11,7 +11,7 @@ exports.m_isAdminEnterpriseActive = {
                     }, {
                         fact: "EnterpriseManagement",
                         operator: "equal",
-                        value: "Admin2",
+                        value: "Admin",
                         path: "$.[0].Type"
                     }]
             }]

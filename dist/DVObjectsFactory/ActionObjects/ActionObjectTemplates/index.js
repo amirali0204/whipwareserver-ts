@@ -13,6 +13,7 @@ exports.DVActionObjects = {
     EnterpriseManagementCREATE: EnterpriseManagementActions.m_EnterpriseManagementCREATE,
     EnterpriseManagementUPDATE: EnterpriseManagementActions.m_EnterpriseManagementUPDATE,
     EnterpriseManagementFindByName: EnterpriseManagementActions.m_EnterpriseManagementFindByName,
-    EnterpriseManagementFindByType: EnterpriseManagementActions.m_EnterpriseManagementFindByType
+    EnterpriseManagementFindByType: EnterpriseManagementActions.m_EnterpriseManagementFindByType,
+    ValidateAdminEnterpriseValidate: EnterpriseManagementActions.m_ValidateAdminEnterpriseValidate
 };
 //# sourceMappingURL=index.js.map

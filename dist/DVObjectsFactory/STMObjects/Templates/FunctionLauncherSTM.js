@@ -16,34 +16,26 @@ exports.m_FunctionLauncher = {
     states: {
         InputValidator: {
             on: {
-                Launch: "validateInput"
+                Launch: "prepareInput"
             }
         },
-        validateInput: {
+        prepareInput: {
             invoke: {
-                id: "validateInput",
-                src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
-                    context = yield STMAction_1.STMActions.ExecuteAction("ValidateInput", context, event, "LibAction", "");
-                    console.log(context);
-                }),
+                id: "prepareInput",
+                src: (context, event) => __awaiter(void 0, void 0, void 0, function* () { return yield STMAction_1.STMActions.ExecuteAction("PrepareInput", context, event, "LibAction", ""); }),
                 onDone: {
-                    target: "AuthenticateIdentity"
+                    target: "LaunchSTM"
                 },
                 onError: {
-                    target: "InputValidationFailed"
+                    target: "LaunchSTM"
                 }
-            }
-        },
-        AuthenticateIdentity: {
-            on: {
-                "": "LaunchSTM"
             }
         },
         LaunchSTM: {
             invoke: {
                 id: "LaunchSTM",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
-                    context = yield STMAction_1.STMActions.ExecuteAction(context.FunctionID, context, event, "STMAction", "");
+                    yield STMAction_1.STMActions.ExecuteAction(context.ExecutorFunction, context[context.ExecutorFunction], event, "STMAction", "");
                     console.log(context);
                 }),
                 onDone: {
@@ -61,9 +53,7 @@ exports.m_FunctionLauncher = {
             type: "final"
         },
         outputValidator: {
-            on: {
-                "": "executed"
-            }
+            type: "final"
         }
     }
 };

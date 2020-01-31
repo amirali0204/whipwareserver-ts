@@ -40,18 +40,23 @@ let FunctionResolver = class FunctionResolver {
             console.log(Input.DVObject.DVOBJ);
             // Validate the Input here
             const DVRequest = {};
+            const inputdata = "Request";
             let type = "FunctionID";
-            DVRequest[type] = Input.FunctionID;
+            DVRequest[inputdata] = {};
+            DVRequest[inputdata][type] = Input.FunctionID;
             type = "Action";
-            DVRequest[type] = Input.Action;
+            DVRequest[inputdata][type] = Input.Action;
             type = "DVObject";
             const type2 = "DVOBJ";
-            DVRequest[type] = {};
-            DVRequest[type][type2] = Input.DVObject.DVOBJ;
+            DVRequest[inputdata][type] = {};
+            DVRequest[inputdata][type][type2] = Input.DVObject.DVOBJ;
             type = "Action";
+            DVRequest[inputdata][type] = Input.Action;
+            type = "ExecutorFunction";
+            DVRequest[type] = Input.FunctionID;
+            type = "ExecutorAction";
             DVRequest[type] = Input.Action;
-            type = "Response";
-            DVRequest[type] = {};
+            console.log(DVRequest);
             const FunctionHandler = new STMAction_1.STMActions("FunctionLauncher", "Launch", DVRequest);
             const STMInvoker = new ActionInvoker_1.ActionInvoker();
             STMInvoker.setAction(FunctionHandler);
@@ -59,8 +64,8 @@ let FunctionResolver = class FunctionResolver {
             rec.DVObject = new FunctionScalar_1.FunctionScalar();
             rec.RequestID = Input.RequestID;
             rec.DVObject.DVOBJ = yield STMInvoker.doInvokeAction();
-            rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
-            //  console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
+            // rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
+            console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
             return rec;
         });
     }

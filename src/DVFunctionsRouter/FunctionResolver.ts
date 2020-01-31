@@ -25,19 +25,23 @@ export class FunctionResolver {
 
     // Validate the Input here
     const DVRequest = {};
+    const inputdata = "Request";
     let type = "FunctionID";
-    DVRequest[type] = Input.FunctionID;
+    DVRequest[inputdata] = {};
+    DVRequest[inputdata][type] = Input.FunctionID;
     type = "Action";
-    DVRequest[type] = Input.Action;
+    DVRequest[inputdata][type] = Input.Action;
     type = "DVObject";
     const type2 = "DVOBJ";
-    DVRequest[type] = {};
-    DVRequest[type][type2] = Input.DVObject.DVOBJ;
+    DVRequest[inputdata][type] = {};
+    DVRequest[inputdata][type][type2] = Input.DVObject.DVOBJ;
     type = "Action";
+    DVRequest[inputdata][type] = Input.Action;
+    type = "ExecutorFunction";
+    DVRequest[type] = Input.FunctionID;
+    type = "ExecutorAction";
     DVRequest[type] = Input.Action;
-    type = "Response";
-    DVRequest[type] = {};
-
+    console.log(DVRequest);
     const FunctionHandler = new STMActions("FunctionLauncher", "Launch", DVRequest);
     const STMInvoker = new ActionInvoker();
     STMInvoker.setAction(FunctionHandler);
@@ -46,8 +50,8 @@ export class FunctionResolver {
     rec.DVObject = new FunctionScalar();
     rec.RequestID = Input.RequestID;
     rec.DVObject.DVOBJ  = await STMInvoker.doInvokeAction();
-    rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
-  //  console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
+   // rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
+    console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
     return rec;
   }
   @Mutation((returns) => FunctionObject)

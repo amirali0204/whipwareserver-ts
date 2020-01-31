@@ -26,38 +26,52 @@ class STMActions {
         return __awaiter(this, void 0, void 0, function* () {
             const actionInvoker = new ActionInvoker_1.ActionInvoker();
             const obj = JSON.parse(JSON.stringify(event));
-            console.log("Event Occured - " + obj.type + " of type - " + actionType + " for Function - " + m_Function);
+            const dvobj = "DVObject";
+            const dvob = "DVOBJ";
+            const act = "Action";
+            const resp = "Response";
+            const req = "Request";
+            const temp2 = "FunctionID";
+            const exefunc = "ExecutorFunction";
+            const exeact = "ExecutorAction";
+            console.log("Event Occured - " + context[exefunc] + " of type - " + actionType + " for Function - " + context[exeact]);
             console.log("object context - " + JSON.stringify(context));
             if (actionType === "DBAction") {
-                const dvobj = "DVObject";
-                const dvob = "DVOBJ";
-                const m_DBActions = new DBActions_1.DBActions(obj.type, context[dvobj][dvob], m_Function);
+                console.log(context);
+                console.log(context[act]);
+                const m_DBActions = new DBActions_1.DBActions(context[req][act], context[req][dvobj][dvob], m_Function);
                 actionInvoker.setAction(m_DBActions);
-                context[m_Function] = yield actionInvoker.doInvokeAction();
+                context[resp] = yield actionInvoker.doInvokeAction();
             }
             else if (actionType === "STMAction") {
-                const action = "Action";
-                const m_STMActions = new STMActions(m_Function, context[action], context);
+                const m_STMActions = new STMActions(context[exefunc], context[exeact], context);
+                actionInvoker.setAction(m_STMActions);
+                yield actionInvoker.doInvokeAction();
+            }
+            else if (actionType === "STMActionLauncher") {
+                const m_STMActions = new STMActions("FunctionLauncher", "Launch", context);
                 actionInvoker.setAction(m_STMActions);
                 yield actionInvoker.doInvokeAction();
             }
             else if (actionType === "RulesAction") {
-                const m_RulesActions = new RulesAction_1.RulesAction(obj.type, context, m_Function);
+                const resp = "Response";
+                const m_RulesActions = new RulesAction_1.RulesAction(context[exefunc], context[[req][act]], context[exefunc]);
                 actionInvoker.setAction(m_RulesActions);
-                context[m_Function] = yield actionInvoker.doInvokeAction();
+                context[resp] = yield actionInvoker.doInvokeAction();
             }
             else if (actionType === "LibAction") {
-                const m_RulesActions = new LibActions_1.LibAction(obj.type, context, m_Function);
+                const m_RulesActions = new LibActions_1.LibAction(context[exefunc] + context[exeact], context, m_Function, context[exeact], context[exefunc]);
                 actionInvoker.setAction(m_RulesActions);
-                context[m_Function] = yield actionInvoker.doInvokeAction();
+                context[context[exefunc]] = yield actionInvoker.doInvokeAction();
+                console.log(context);
             }
             return context;
         });
     }
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
-            //    console.log(`StateMachine Execution for Function:(${this.Function})`);
-            //    console.log(`StateMachine Execution with Action:(${this.Action})`);
+            //     console.log(`StateMachine Execution for Function:(${this.Function})`);
+            //     console.log(`StateMachine Execution with Action:(${this.Action})`);
             //    console.log(`StateMachine Execution for Input:(${JSON.stringify(this.InputObject)})`);
             let DVObjectsFactory;
             DVObjectsFactory = new STMObjectCreator_1.STMObjectCreator(this.Function);
@@ -68,7 +82,7 @@ class STMActions {
             const machine = stm.withContext(this.InputObject);
             yield new Promise((resolve, reject) => {
                 const promiseService = xstate_1.interpret(machine).onTransition((context) => {
-                    console.log(context.value);
+                    //        console.log(context.value);
                     if (context.done) {
                         resolve();
                     }

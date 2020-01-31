@@ -1,4 +1,3 @@
-import { assign, Event} from "xstate";
 import {STMActions} from "../../../../DVActionsExecutor/STMActions/STMAction";
 export const m_ValidateAdminEnterprise = {
         id: "ValidateAdminEnterprise",
@@ -14,9 +13,10 @@ export const m_ValidateAdminEnterprise = {
             invoke: {
               id: "loadEnterprise",
               src: async (context, event) => {
-                  context = await STMActions.ExecuteAction("EnterpriseManagement", context, {type: "FindByType"}, "DBAction", "");
-              },
-              onDone: {
+                context.ExecutorFunction = "EnterpriseManagement";
+                context.ExecutorAction = "FindByType";
+                await STMActions.ExecuteAction("FunctionLauncher", context, {}, "STMActionLauncher", "");
+              }, onDone: {
                 target: "DecisionAdmin"
               },
               onError: {

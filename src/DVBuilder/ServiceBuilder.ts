@@ -8,8 +8,26 @@ export class DVBuilder {
         // Admin Role is created
         // Admin user is also created: login password
         // ACL for Admin Role is created
-        const dvobj =  {DVObject: { DVOBJ: { Type: "Admin"} }};
-        const FunctionHandler = new STMActions("ValidateAdminEnterprise", "Validate", dvobj);
+         // Validate the Input here
+        const DVRequest = {};
+        const inputdata = "Request";
+        let type = "FunctionID";
+        DVRequest[inputdata] = {};
+        DVRequest[inputdata][type] = "ValidateAdminEnterprise";
+        type = "Action";
+        DVRequest[inputdata][type] = "Validate";
+        type = "DVObject";
+        const type2 = "DVOBJ";
+        DVRequest[inputdata][type] = {};
+        DVRequest[inputdata][type][type2] =  { Type: "Admin"};
+        type = "Action";
+        DVRequest[inputdata][type] = "Validate";
+        type = "ExecutorFunction";
+        DVRequest[type] = "ValidateAdminEnterprise";
+        type = "ExecutorAction";
+        DVRequest[type] = "Validate";
+       // const dvobj =  {Request: {DVObject: { DVOBJ: { Type: "Admin"}}}};
+        const FunctionHandler = new STMActions("FunctionLauncher", "Launch", DVRequest);
         const STMInvoker = new ActionInvoker();
         STMInvoker.setAction(FunctionHandler);
         const response = await STMInvoker.doInvokeAction();

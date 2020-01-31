@@ -31,9 +31,8 @@ export const m_EnterpriseManagement = {
             fetch: {
               invoke: {
                 id: "getEnterprise",
-                src: async (context, event) => {context = await STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
-                                                console.log("Loaded- " + context);
-                },
+                src: async (context, event) => await STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "")
+                ,
                 onDone: {
                   target: "fetched"
                 //  actions: assign({ user: (context, event) => event.data })
