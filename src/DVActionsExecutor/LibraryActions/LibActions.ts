@@ -18,9 +18,9 @@ export class LibAction implements ActionInterface {
         this.TargetFunc = targetfunc;
     }
     public async execute(): Promise<object | undefined> {
-        console.log(`LibAction Execution for Function:(${this.LibFunction})`);
-        console.log(`LibAction Execution with Action:(${this.DVFunction})`);
-        console.log(`LibAction Execution for Input:(${JSON.stringify(this.InputObject)})`);
+    //    console.log(`LibAction Execution for Function:(${this.LibFunction})`);
+    //    console.log(`LibAction Execution with Action:(${this.DVFunction})`);
+    //    console.log(`LibAction Execution for Input:(${JSON.stringify(this.InputObject)})`);
         if (this.LibFunction === "PrepareInput") {
             let DVObjectsFactory: DVObjectCreator;
             DVObjectsFactory = new ActionObjectCreator(this.DVFunction);
@@ -36,6 +36,9 @@ export class LibAction implements ActionInterface {
             objectret[exeact] = this.Target;
             return objectret;
         } else if (this.LibFunction === "PrepareOuput") {
+            console.log("This is PrepareOuput for function =----- " + this.DVFunction + "Resp");
+            console.log(this.InputObject);
+
             let DVObjectsFactory: DVObjectCreator;
             DVObjectsFactory = new ActionObjectCreator(this.DVFunction + "Resp");
             let dbObject = {};

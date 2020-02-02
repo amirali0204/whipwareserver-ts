@@ -23,9 +23,9 @@ class LibAction {
     }
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`LibAction Execution for Function:(${this.LibFunction})`);
-            console.log(`LibAction Execution with Action:(${this.DVFunction})`);
-            console.log(`LibAction Execution for Input:(${JSON.stringify(this.InputObject)})`);
+            //    console.log(`LibAction Execution for Function:(${this.LibFunction})`);
+            //    console.log(`LibAction Execution with Action:(${this.DVFunction})`);
+            //    console.log(`LibAction Execution for Input:(${JSON.stringify(this.InputObject)})`);
             if (this.LibFunction === "PrepareInput") {
                 let DVObjectsFactory;
                 DVObjectsFactory = new ActionObjectCreator_1.ActionObjectCreator(this.DVFunction);
@@ -42,6 +42,8 @@ class LibAction {
                 return objectret;
             }
             else if (this.LibFunction === "PrepareOuput") {
+                console.log("This is PrepareOuput for function =----- " + this.DVFunction + "Resp");
+                console.log(this.InputObject);
                 let DVObjectsFactory;
                 DVObjectsFactory = new ActionObjectCreator_1.ActionObjectCreator(this.DVFunction + "Resp");
                 let dbObject = {};

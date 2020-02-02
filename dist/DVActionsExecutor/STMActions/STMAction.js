@@ -37,8 +37,6 @@ class STMActions {
             //        console.log("Event Occured - " + context[exefunc] + " of type - " + actionType + " for Function - " + context[exeact]);
             //        console.log("object context - " + JSON.stringify(context) );
             if (actionType === "DBAction") {
-                console.log(context);
-                console.log(context[act]);
                 const m_DBActions = new DBActions_1.DBActions(context[req][act], context[req][dvobj][dvob], m_Function);
                 actionInvoker.setAction(m_DBActions);
                 context[resp] = yield actionInvoker.doInvokeAction();
@@ -63,7 +61,8 @@ class STMActions {
                 const m_RulesActions = new LibActions_1.LibAction(context[exefunc] + context[exeact], context, m_Function, context[exeact], context[exefunc]);
                 actionInvoker.setAction(m_RulesActions);
                 context[context[exefunc]] = yield actionInvoker.doInvokeAction();
-                //       console.log(context);
+                console.log(context);
+                console.log("This is libAction Output = " + context[exefunc]);
             }
             return context;
         });
@@ -93,7 +92,7 @@ class STMActions {
             console.log(`StateMachine Executed for Function:(${this.Function})`);
             // This is the place to build the output response to the upper layer and drop all other data
             const response = "Response";
-            console.log("this was the input ---- for function " + this.Function);
+            console.log("STM Ended this was the input ---- for function " + this.Function);
             console.log(this.InputObject);
             return this.InputObject; // [this.Function][response];
         });

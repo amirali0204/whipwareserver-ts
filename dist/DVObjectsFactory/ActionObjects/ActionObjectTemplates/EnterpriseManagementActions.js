@@ -27,7 +27,7 @@ exports.m_EnterpriseManagementFindByTypeResp = {
         DVID: "DVID"
     }
 };
-exports.m_ValidateAdminEnterpriseResp = {
+exports.m_ValidateAdminEnterpriseValidateResp = {
     OBJ_ValidateAdminEnterprise: {
         __Name: "ValidateAdminEnterprise",
         __Source: ["ValidateAdminEnterprise", "EnterpriseManagement", "Response"],

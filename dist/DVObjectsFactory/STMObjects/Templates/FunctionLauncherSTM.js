@@ -36,8 +36,6 @@ exports.m_FunctionLauncher = {
                 id: "LaunchSTM",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
                     yield STMAction_1.STMActions.ExecuteAction(context.ExecutorFunction, context[context.ExecutorFunction], event, "STMAction", "");
-                    //                  console.log("This was the output of the execution ------>");
-                    //                  console.log(context);
                 }),
                 onDone: {
                     target: "prepareOuput"
@@ -51,11 +49,8 @@ exports.m_FunctionLauncher = {
             invoke: {
                 id: "prepareOuput",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
-                    //                console.log("This is the before prepared output");
-                    //                console.log(context);
                     yield STMAction_1.STMActions.ExecuteAction("PrepareOuput", context, event, "LibAction", "");
-                    //                console.log("This is the prepared output");
-                    //                console.log(context);
+                    console.log(context);
                 }),
                 onDone: {
                     target: "executed"

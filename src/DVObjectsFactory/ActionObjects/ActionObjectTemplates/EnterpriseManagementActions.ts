@@ -26,7 +26,7 @@ export const m_EnterpriseManagementFindByTypeResp = {
         DVID: "DVID"
     }
 };
-export const m_ValidateAdminEnterpriseResp = {
+export const m_ValidateAdminEnterpriseValidateResp = {
     OBJ_ValidateAdminEnterprise: {
         __Name: "ValidateAdminEnterprise",
         __Source: ["ValidateAdminEnterprise", "EnterpriseManagement", "Response"],

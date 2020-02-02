@@ -25,8 +25,6 @@ export const m_FunctionLauncher = {
                 id: "LaunchSTM",
                 src: async (context, event) => {
                   await STMActions.ExecuteAction(context.ExecutorFunction, context[context.ExecutorFunction], event, "STMAction", "");
-//                  console.log("This was the output of the execution ------>");
-//                  console.log(context);
                 },
                 onDone: {
                   target: "prepareOuput"
@@ -40,11 +38,8 @@ export const m_FunctionLauncher = {
             invoke: {
               id: "prepareOuput",
               src: async (context, event) => {
-//                console.log("This is the before prepared output");
-//                console.log(context);
                 await STMActions.ExecuteAction("PrepareOuput", context, event, "LibAction", "");
-//                console.log("This is the prepared output");
-//                console.log(context);
+                console.log(context);
             },
               onDone: {
                 target: "executed"

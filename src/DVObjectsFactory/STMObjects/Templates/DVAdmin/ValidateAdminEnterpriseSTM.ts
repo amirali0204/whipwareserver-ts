@@ -16,6 +16,8 @@ export const m_ValidateAdminEnterprise = {
                 context.ExecutorFunction = "EnterpriseManagement";
                 context.ExecutorAction = "FindByType";
                 await STMActions.ExecuteAction("FunctionLauncher", context, {}, "STMActionLauncher", "");
+                context.ExecutorFunction = "ValidateAdminEnterprise";
+                context.ExecutorAction = "Validate";
               }, onDone: {
                 target: "executed"
               },

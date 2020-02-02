@@ -7,5 +7,5 @@ export const DVActionObjects = {
     EnterpriseManagementFindByType: EnterpriseManagementActions.m_EnterpriseManagementFindByType,
     EnterpriseManagementFindByTypeResp: EnterpriseManagementActions.m_EnterpriseManagementFindByTypeResp,
     ValidateAdminEnterpriseValidate: EnterpriseManagementActions.m_ValidateAdminEnterpriseValidate,
-    ValidateAdminEnterpriseResp: EnterpriseManagementActions.m_ValidateAdminEnterpriseResp
+    ValidateAdminEnterpriseValidateResp: EnterpriseManagementActions.m_ValidateAdminEnterpriseValidateResp
 };

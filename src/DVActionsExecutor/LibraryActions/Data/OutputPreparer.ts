@@ -10,6 +10,8 @@ export class OutputPreparer implements Strategy {
     }
     public doAlgorithm(): object {
         this.OutputObject = {};
+        console.log(this.context);
+        console.log(this.InputObject);
         for (const inkey of Object.keys(this.InputObject)) {
             if (inkey.startsWith("OBJ_")) {
                 this.handleObject(this.InputObject[inkey], inkey);
@@ -17,6 +19,8 @@ export class OutputPreparer implements Strategy {
                 this.OutputObject[inkey] = this.context[inkey];
             }
         }
+        console.log("This is prepared output for function - ");
+        console.log(this.OutputObject);
         return this.OutputObject;
     }
     public handleObject(target: object, inkey: string) {
@@ -48,7 +52,7 @@ export class OutputPreparer implements Strategy {
                     if (arraykey.startsWith("OBJ_")) {
                         this.handleObject(target[arraykey], arraykey);
                     } else {
-                        obj[arraykey] = item[arraykey];
+                        obj[target[arraykey]] = item[arraykey];
                     }
                 }
                 arry.push(obj);
@@ -62,7 +66,7 @@ export class OutputPreparer implements Strategy {
                     if (arraykey.startsWith("OBJ_")) {
                         this.handleObject(target[arraykey], arraykey);
                     } else {
-                        this.OutputObject[resp][arraykey] = item[arraykey];
+                        this.OutputObject[resp][target[arraykey]] = item[arraykey];
                     }
                 }
             }

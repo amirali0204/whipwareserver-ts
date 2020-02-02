@@ -27,6 +27,8 @@ exports.m_ValidateAdminEnterprise = {
                     context.ExecutorFunction = "EnterpriseManagement";
                     context.ExecutorAction = "FindByType";
                     yield STMAction_1.STMActions.ExecuteAction("FunctionLauncher", context, {}, "STMActionLauncher", "");
+                    context.ExecutorFunction = "ValidateAdminEnterprise";
+                    context.ExecutorAction = "Validate";
                 }), onDone: {
                     target: "executed"
                 },

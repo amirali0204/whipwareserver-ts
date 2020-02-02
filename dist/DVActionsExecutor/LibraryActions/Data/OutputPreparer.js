@@ -7,6 +7,8 @@ class OutputPreparer {
     }
     doAlgorithm() {
         this.OutputObject = {};
+        console.log(this.context);
+        console.log(this.InputObject);
         for (const inkey of Object.keys(this.InputObject)) {
             if (inkey.startsWith("OBJ_")) {
                 this.handleObject(this.InputObject[inkey], inkey);
@@ -15,6 +17,8 @@ class OutputPreparer {
                 this.OutputObject[inkey] = this.context[inkey];
             }
         }
+        console.log("This is prepared output for function - ");
+        console.log(this.OutputObject);
         return this.OutputObject;
     }
     handleObject(target, inkey) {
@@ -49,7 +53,7 @@ class OutputPreparer {
                         this.handleObject(target[arraykey], arraykey);
                     }
                     else {
-                        obj[arraykey] = item[arraykey];
+                        obj[target[arraykey]] = item[arraykey];
                     }
                 }
                 arry.push(obj);
@@ -65,7 +69,7 @@ class OutputPreparer {
                         this.handleObject(target[arraykey], arraykey);
                     }
                     else {
-                        this.OutputObject[resp][arraykey] = item[arraykey];
+                        this.OutputObject[resp][target[arraykey]] = item[arraykey];
                     }
                 }
             }
