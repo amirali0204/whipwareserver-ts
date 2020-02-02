@@ -79,6 +79,6 @@ export class DBActions implements ActionInterface {
                 break;
             }
         }
-        return this.OutputObject;
+        return JSON.parse(JSON.stringify(this.OutputObject));
     }
 }

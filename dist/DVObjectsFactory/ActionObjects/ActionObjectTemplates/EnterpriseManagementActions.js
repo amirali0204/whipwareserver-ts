@@ -16,6 +16,28 @@ exports.m_EnterpriseManagementFindByType = {
         }
     }
 };
+exports.m_EnterpriseManagementFindByTypeResp = {
+    OBJ_EnterpriseName: {
+        __Name: "EnterpriseManagement",
+        __Source: ["EnterpriseManagement", "Response"],
+        __Type: "Array",
+        _id: "_id",
+        Type: "Type",
+        State: "State",
+        DVID: "DVID"
+    }
+};
+exports.m_ValidateAdminEnterpriseResp = {
+    OBJ_ValidateAdminEnterprise: {
+        __Name: "ValidateAdminEnterprise",
+        __Source: ["ValidateAdminEnterprise", "EnterpriseManagement", "Response"],
+        __Type: "Array",
+        _id: "_id",
+        Type: "Type",
+        State: "State",
+        DVID: "DVID"
+    }
+};
 exports.m_ValidateAdminEnterpriseValidate = {
     Type: {
         dataType: ["isDefined", "isString"],

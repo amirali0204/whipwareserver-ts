@@ -90,7 +90,7 @@ class DBActions {
                     break;
                 }
             }
-            return this.OutputObject;
+            return JSON.parse(JSON.stringify(this.OutputObject));
         });
     }
 }

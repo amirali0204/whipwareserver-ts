@@ -28,10 +28,10 @@ exports.m_ValidateAdminEnterprise = {
                     context.ExecutorAction = "FindByType";
                     yield STMAction_1.STMActions.ExecuteAction("FunctionLauncher", context, {}, "STMActionLauncher", "");
                 }), onDone: {
-                    target: "DecisionAdmin"
+                    target: "executed"
                 },
                 onError: {
-                    target: "DecisionAdmin"
+                    target: "executed"
                 }
             }
         },

@@ -16,7 +16,7 @@ export const m_FunctionLauncher = {
                 target: "LaunchSTM"
               },
               onError: {
-                target: "LaunchSTM"
+                target: "Failed"
              }
             }
           },
@@ -25,15 +25,34 @@ export const m_FunctionLauncher = {
                 id: "LaunchSTM",
                 src: async (context, event) => {
                   await STMActions.ExecuteAction(context.ExecutorFunction, context[context.ExecutorFunction], event, "STMAction", "");
-                  console.log(context);
+//                  console.log("This was the output of the execution ------>");
+//                  console.log(context);
                 },
                 onDone: {
-                  target: "outputValidator"
+                  target: "prepareOuput"
                 },
                 onError: {
-                  target: "executed"
+                  target: "Failed"
                }
               }
+          },
+          prepareOuput: {
+            invoke: {
+              id: "prepareOuput",
+              src: async (context, event) => {
+//                console.log("This is the before prepared output");
+//                console.log(context);
+                await STMActions.ExecuteAction("PrepareOuput", context, event, "LibAction", "");
+//                console.log("This is the prepared output");
+//                console.log(context);
+            },
+              onDone: {
+                target: "executed"
+              },
+              onError: {
+                target: "Failed"
+             }
+            }
           },
           executed: {
             type: "final"
@@ -42,6 +61,9 @@ export const m_FunctionLauncher = {
             type: "final"
           },
           outputValidator: {
+            type: "final"
+          },
+          Failed: {
             type: "final"
           }
         }

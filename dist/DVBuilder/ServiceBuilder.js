@@ -42,6 +42,8 @@ class DVBuilder {
             const STMInvoker = new ActionInvoker_1.ActionInvoker();
             STMInvoker.setAction(FunctionHandler);
             const response = yield STMInvoker.doInvokeAction();
+            const resp = "Response";
+            //  response.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID][resp];
             console.log("This is validateAdminEnterprise" + JSON.stringify(response));
             return 1;
         });

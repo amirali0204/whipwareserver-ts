@@ -64,7 +64,8 @@ let FunctionResolver = class FunctionResolver {
             rec.DVObject = new FunctionScalar_1.FunctionScalar();
             rec.RequestID = Input.RequestID;
             rec.DVObject.DVOBJ = yield STMInvoker.doInvokeAction();
-            // rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID];
+            const resp = "Response";
+            rec.DVObject.DVOBJ = rec.DVObject.DVOBJ[Input.FunctionID][resp];
             console.log("Responsed to query function Data ---> " + JSON.stringify(rec.DVObject.DVOBJ));
             return rec;
         });

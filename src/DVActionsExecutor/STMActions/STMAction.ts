@@ -20,11 +20,10 @@ export class STMActions implements ActionInterface {
         const temp2 = "FunctionID";
         const exefunc = "ExecutorFunction";
         const exeact = "ExecutorAction";
-        console.log("Event Occured - " + context[exefunc] + " of type - " + actionType + " for Function - " + context[exeact]);
-        console.log("object context - " + JSON.stringify(context) );
+//        console.log("Event Occured - " + context[exefunc] + " of type - " + actionType + " for Function - " + context[exeact]);
+//        console.log("object context - " + JSON.stringify(context) );
 
         if (actionType === "DBAction") {
-
             console.log(context);
             console.log(context[act]);
             const m_DBActions = new DBActions(context[req][act], context[req][dvobj][dvob], m_Function);
@@ -47,7 +46,7 @@ export class STMActions implements ActionInterface {
             const m_RulesActions = new LibAction(context[exefunc] + context[exeact], context, m_Function, context[exeact], context[exefunc]);
             actionInvoker.setAction(m_RulesActions);
             context[context[exefunc]] = await actionInvoker.doInvokeAction();
-            console.log(context);
+     //       console.log(context);
         }
         return context;
     }
@@ -75,7 +74,6 @@ export class STMActions implements ActionInterface {
         const machine = stm.withContext(this.InputObject);
         await new Promise((resolve, reject) => {
             const promiseService = interpret(machine).onTransition((context) => {
-            //        console.log(context.value);
                     if (context.done) {
                         resolve();
                     }
@@ -85,8 +83,12 @@ export class STMActions implements ActionInterface {
             console.log(promiseService.initialState.nextEvents);
             promiseService.send(this.Action);
         });
-       // this.OutputObject = { response: "result from machine"};
         console.log(`StateMachine Executed for Function:(${this.Function})`);
-        return this.InputObject;
+        // This is the place to build the output response to the upper layer and drop all other data
+        const response = "Response";
+        console.log("this was the input ---- for function " + this.Function);
+        console.log(this.InputObject);
+
+        return this.InputObject; // [this.Function][response];
     }
 }

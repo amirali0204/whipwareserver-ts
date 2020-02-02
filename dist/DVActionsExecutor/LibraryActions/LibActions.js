@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ActionObjectCreator_1 = require("../../DVObjectsFactory/ActionObjects/ActionObjectCreator");
 const ActionStrategy_1 = require("./ActionStrategy");
 const InputPreparer_1 = require("./Data/InputPreparer");
+const OutputPreparer_1 = require("./Data/OutputPreparer");
 class LibAction {
     constructor(action, context, m_function, target, targetfunc) {
         this.LibFunction = m_function;
@@ -22,9 +23,9 @@ class LibAction {
     }
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
-            //    console.log(`LibAction Execution for Function:(${this.LibFunction})`);
-            //    console.log(`LibAction Execution with Action:(${this.DVFunction})`);
-            //    console.log(`LibAction Execution for Input:(${JSON.stringify(this.InputObject)})`);
+            console.log(`LibAction Execution for Function:(${this.LibFunction})`);
+            console.log(`LibAction Execution with Action:(${this.DVFunction})`);
+            console.log(`LibAction Execution for Input:(${JSON.stringify(this.InputObject)})`);
             if (this.LibFunction === "PrepareInput") {
                 let DVObjectsFactory;
                 DVObjectsFactory = new ActionObjectCreator_1.ActionObjectCreator(this.DVFunction);
@@ -33,6 +34,19 @@ class LibAction {
                 //        console.log("This is the Libaction Prepare Input following DB object - ");
                 //        console.log(dbObject);
                 const context = new ActionStrategy_1.ActionStrategy(new InputPreparer_1.InputPreparer(dbObject, this.InputObject));
+                const objectret = context.LibraryAction();
+                const exefunc = "ExecutorFunction";
+                const exeact = "ExecutorAction";
+                objectret[exefunc] = this.TargetFunc;
+                objectret[exeact] = this.Target;
+                return objectret;
+            }
+            else if (this.LibFunction === "PrepareOuput") {
+                let DVObjectsFactory;
+                DVObjectsFactory = new ActionObjectCreator_1.ActionObjectCreator(this.DVFunction + "Resp");
+                let dbObject = {};
+                dbObject = DVObjectsFactory.createObject();
+                const context = new ActionStrategy_1.ActionStrategy(new OutputPreparer_1.OutputPreparer(dbObject, this.InputObject));
                 const objectret = context.LibraryAction();
                 const exefunc = "ExecutorFunction";
                 const exeact = "ExecutorAction";

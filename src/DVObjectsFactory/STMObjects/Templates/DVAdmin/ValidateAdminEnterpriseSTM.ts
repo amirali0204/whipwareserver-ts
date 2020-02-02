@@ -17,10 +17,10 @@ export const m_ValidateAdminEnterprise = {
                 context.ExecutorAction = "FindByType";
                 await STMActions.ExecuteAction("FunctionLauncher", context, {}, "STMActionLauncher", "");
               }, onDone: {
-                target: "DecisionAdmin"
+                target: "executed"
               },
               onError: {
-                target: "DecisionAdmin"
+                target: "executed"
              }
             }
           },
