@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ActionObjectCreator_1 = require("../../DVObjectsFactory/ActionObjects/ActionObjectCreator");
+const ActionObjectCreator_1 = require("../../DVObjectsFactory/LibActionObjects/ActionObjectCreator");
 const ActionStrategy_1 = require("./ActionStrategy");
 const InputPreparer_1 = require("./Data/InputPreparer");
 const OutputPreparer_1 = require("./Data/OutputPreparer");

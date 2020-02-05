@@ -22,7 +22,6 @@ export class DBActions implements ActionInterface {
     }
     public async execute(): Promise<object | undefined> {
         console.log(`DBAction: (${this.SysAction}) for the function : (${this.m_Function})`);
-     //   console.log("Input Data- " + JSON.stringify(this.InputObject));
         let DVObjectsFactory: DVObjectCreator;
         DVObjectsFactory = new DBObjectCreator(this.m_Function);
         let dbObject = {};
@@ -74,7 +73,6 @@ export class DBActions implements ActionInterface {
                 const query = Schamatable.find(Querybuilder);
                 await query.then(( result) => {
                     this.OutputObject = result;
-               //     console.log("EXEC FIND Query for Function - " + this.m_Function);
                 });
                 break;
             }

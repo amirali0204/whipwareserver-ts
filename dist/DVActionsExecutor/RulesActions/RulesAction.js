@@ -39,7 +39,6 @@ class RulesAction {
             //       });
             const factstr = JSON.stringify(this.InputObject);
             const facts = JSON.parse(factstr);
-            // This was a huge blunder
             yield new Promise((resolve, reject) => {
                 engine
                     .run(facts)
@@ -47,7 +46,7 @@ class RulesAction {
                     // 'results' is an object containing successful events, and an Almanac instance containing facts
                     results.events.map((event) => {
                         console.log("Rules Action returned - " + JSON.stringify(event.params.message));
-                        this.OutputObject = { Response: event.params.message };
+                        this.OutputObject = { Decision: event.params.message };
                         console.log(this.OutputObject);
                     });
                     resolve();

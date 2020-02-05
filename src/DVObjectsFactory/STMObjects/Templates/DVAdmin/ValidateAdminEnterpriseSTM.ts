@@ -19,7 +19,7 @@ export const m_ValidateAdminEnterprise = {
                 context.ExecutorFunction = "ValidateAdminEnterprise";
                 context.ExecutorAction = "Validate";
               }, onDone: {
-                target: "executed"
+                target: "DecisionAdmin"
               },
               onError: {
                 target: "executed"
@@ -30,14 +30,16 @@ export const m_ValidateAdminEnterprise = {
             invoke: {
                 id: "DecisionAdmin",
                 src: async (context, event) => {
-                    context = await STMActions.ExecuteAction("isAdminEnterpriseActive", context, event, "RulesAction", "");
+                  context.ExecutorFunction = "isAdminEnterpriseActive";
+                  context = await STMActions.ExecuteAction("isAdminEnterpriseActive", context, event, "RulesAction", "");
+                  context.ExecutorFunction = "ValidateAdminEnterprise";
                 },
                 onDone: [{
                   target: "executed",
-                  cond: (context, event) => context.isAdminEnterpriseActive.Response === "TRUE"
+                  cond: (context, event) => context.isAdminEnterpriseActive.Response.Decision === "TRUE"
                 }, {
-                  target: "CreateAdminEnterprise",
-                  cond: (context, event) => context.isAdminEnterpriseActive.Response === "FALSE"
+                  target: "CreateDefaultSystem",
+                  cond: (context, event) => context.isAdminEnterpriseActive.Response.Decision === "FALSE"
                 }],
                 onError: {
                   target: "executed"
@@ -50,8 +52,22 @@ export const m_ValidateAdminEnterprise = {
           outputValidator: {
             type: "final"
           },
-          CreateAdminEnterprise: {
-            type: "final"
+          CreateDefaultSystem: {
+            invoke: {
+              id: "CreateDefaultSystem",
+              src: async (context, event) => {
+                context.ExecutorFunction = "DefaultSystem";
+                context.ExecutorAction = "CREATE";
+                await STMActions.ExecuteAction("FunctionLauncher", context, {}, "STMActionLauncher", "");
+                context.ExecutorFunction = "ValidateAdminEnterprise";
+                context.ExecutorAction = "Validate";
+              }, onDone: {
+                target: "executed"
+              },
+              onError: {
+                target: "executed"
+             }
+            }
           }
         }
 

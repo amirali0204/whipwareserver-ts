@@ -1,15 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-exports.Functions = new mongoose_1.Schema({
-    id: String,
-    FunName: String,
+exports.m_Functions = {
+    DVID: String,
+    FunctionName: String,
     Type: String,
-    InputAttribute: [{ DVObject: String }],
-    OutputAttribute: [{ DVObject: String }],
-    SysActionID: String,
-    ResolversSchema: String,
     EnterpriseID: String,
-    AppID: String
-}, { timestamps: true });
+    AppID: [String],
+    Relation: [{
+            Name: String,
+            Users: [String],
+            Groups: [String],
+            Roles: [String],
+            AppIDs: [String],
+            EnterpriseID: String
+        }]
+};
+exports.m_FunctionsQueries = {
+    FindByFunctionName: {
+        FunctionName: "FunctionNameValue"
+    },
+    FindByFunctionNameArgs: [
+        "FunctionName"
+    ]
+};
 //# sourceMappingURL=Functions.js.map

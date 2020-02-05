@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const xstate_1 = require("xstate");
-const STMActionCreator_1 = require("../../DVObjectsFactory/STMObjects/STMActionCreator");
 const STMObjectCreator_1 = require("../../DVObjectsFactory/STMObjects/STMObjectCreator");
 const ActionInvoker_1 = require("../ActionInvoker");
 const DBActions_1 = require("../DBActions/DBActions");
@@ -31,7 +30,6 @@ class STMActions {
             const act = "Action";
             const resp = "Response";
             const req = "Request";
-            const temp2 = "FunctionID";
             const exefunc = "ExecutorFunction";
             const exeact = "ExecutorAction";
             //        console.log("Event Occured - " + context[exefunc] + " of type - " + actionType + " for Function - " + context[exeact]);
@@ -53,9 +51,10 @@ class STMActions {
             }
             else if (actionType === "RulesAction") {
                 const resp = "Response";
-                const m_RulesActions = new RulesAction_1.RulesAction(context[exefunc], context[[req][act]], context[exefunc]);
+                const m_RulesActions = new RulesAction_1.RulesAction(context[exefunc], context, context[exefunc]);
                 actionInvoker.setAction(m_RulesActions);
-                context[resp] = yield actionInvoker.doInvokeAction();
+                context[context[exefunc]] = {};
+                context[context[exefunc]][resp] = yield actionInvoker.doInvokeAction();
             }
             else if (actionType === "LibAction") {
                 const m_RulesActions = new LibActions_1.LibAction(context[exefunc] + context[exeact], context, m_Function, context[exeact], context[exefunc]);
@@ -75,9 +74,7 @@ class STMActions {
             let DVObjectsFactory;
             DVObjectsFactory = new STMObjectCreator_1.STMObjectCreator(this.Function);
             const dvMachine = DVObjectsFactory.createObject();
-            const DVObjectsFactory2 = new STMActionCreator_1.STMActionCreator(this.Function + "Actions");
-            const dvMachineActions = DVObjectsFactory2.createObject();
-            const stm = xstate_1.Machine(dvMachine, dvMachineActions);
+            const stm = xstate_1.Machine(dvMachine);
             const machine = stm.withContext(this.InputObject);
             yield new Promise((resolve, reject) => {
                 const promiseService = xstate_1.interpret(machine).onTransition((context) => {

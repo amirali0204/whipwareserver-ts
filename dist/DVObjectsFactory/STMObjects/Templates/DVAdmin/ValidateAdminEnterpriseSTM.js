@@ -30,7 +30,7 @@ exports.m_ValidateAdminEnterprise = {
                     context.ExecutorFunction = "ValidateAdminEnterprise";
                     context.ExecutorAction = "Validate";
                 }), onDone: {
-                    target: "executed"
+                    target: "DecisionAdmin"
                 },
                 onError: {
                     target: "executed"
@@ -41,14 +41,16 @@ exports.m_ValidateAdminEnterprise = {
             invoke: {
                 id: "DecisionAdmin",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
+                    context.ExecutorFunction = "isAdminEnterpriseActive";
                     context = yield STMAction_1.STMActions.ExecuteAction("isAdminEnterpriseActive", context, event, "RulesAction", "");
+                    context.ExecutorFunction = "ValidateAdminEnterprise";
                 }),
                 onDone: [{
                         target: "executed",
-                        cond: (context, event) => context.isAdminEnterpriseActive.Response === "TRUE"
+                        cond: (context, event) => context.isAdminEnterpriseActive.Response.Decision === "TRUE"
                     }, {
-                        target: "CreateAdminEnterprise",
-                        cond: (context, event) => context.isAdminEnterpriseActive.Response === "FALSE"
+                        target: "CreateDefaultSystem",
+                        cond: (context, event) => context.isAdminEnterpriseActive.Response.Decision === "FALSE"
                     }],
                 onError: {
                     target: "executed"
@@ -61,8 +63,22 @@ exports.m_ValidateAdminEnterprise = {
         outputValidator: {
             type: "final"
         },
-        CreateAdminEnterprise: {
-            type: "final"
+        CreateDefaultSystem: {
+            invoke: {
+                id: "CreateDefaultSystem",
+                src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
+                    context.ExecutorFunction = "DefaultSystem";
+                    context.ExecutorAction = "CREATE";
+                    yield STMAction_1.STMActions.ExecuteAction("FunctionLauncher", context, {}, "STMActionLauncher", "");
+                    context.ExecutorFunction = "ValidateAdminEnterprise";
+                    context.ExecutorAction = "Validate";
+                }), onDone: {
+                    target: "executed"
+                },
+                onError: {
+                    target: "executed"
+                }
+            }
         }
     }
 };

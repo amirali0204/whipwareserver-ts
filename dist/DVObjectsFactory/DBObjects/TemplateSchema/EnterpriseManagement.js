@@ -4,7 +4,15 @@ exports.m_EnterpriseManagement = {
     DVID: String,
     EnterpriseName: String,
     Type: String,
-    State: String // lifecycle of an Enterprise need to design in STM
+    State: String,
+    Relation: [{
+            Name: String,
+            Users: [String],
+            Groups: [String],
+            Roles: [String],
+            AppIDs: [String],
+            EnterpriseID: [String]
+        }]
 };
 exports.m_EnterpriseManagementQueries = {
     FindByName: {

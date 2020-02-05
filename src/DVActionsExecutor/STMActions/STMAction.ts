@@ -17,7 +17,6 @@ export class STMActions implements ActionInterface {
         const act = "Action";
         const resp = "Response";
         const req = "Request";
-        const temp2 = "FunctionID";
         const exefunc = "ExecutorFunction";
         const exeact = "ExecutorAction";
 //        console.log("Event Occured - " + context[exefunc] + " of type - " + actionType + " for Function - " + context[exeact]);
@@ -37,9 +36,10 @@ export class STMActions implements ActionInterface {
             await actionInvoker.doInvokeAction();
         } else if (actionType === "RulesAction") {
             const resp = "Response";
-            const m_RulesActions = new RulesAction(context[exefunc], context[[req][act]], context[exefunc]);
+            const m_RulesActions = new RulesAction(context[exefunc], context, context[exefunc]);
             actionInvoker.setAction(m_RulesActions);
-            context[resp] = await actionInvoker.doInvokeAction();
+            context[context[exefunc]] = {};
+            context[context[exefunc]][resp] = await actionInvoker.doInvokeAction();
         } else if (actionType === "LibAction") {
             const m_RulesActions = new LibAction(context[exefunc] + context[exeact], context, m_Function, context[exeact], context[exefunc]);
             actionInvoker.setAction(m_RulesActions);
@@ -53,7 +53,6 @@ export class STMActions implements ActionInterface {
     private Function: string;
     private Action: string;
     private InputObject: Object;
-    private OutputObject: Object;
     constructor(m_function: string, action: string, Input: Object) {
         this.Function = m_function;
         this.Action = action;
@@ -67,9 +66,7 @@ export class STMActions implements ActionInterface {
         DVObjectsFactory = new STMObjectCreator(this.Function);
         const dvMachine = DVObjectsFactory.createObject();
 
-        const DVObjectsFactory2 = new STMActionCreator(this.Function + "Actions");
-        const dvMachineActions = DVObjectsFactory2.createObject();
-        const stm = Machine(dvMachine, dvMachineActions  );
+        const stm = Machine(dvMachine);
         const machine = stm.withContext(this.InputObject);
         await new Promise((resolve, reject) => {
             const promiseService = interpret(machine).onTransition((context) => {
@@ -87,7 +84,6 @@ export class STMActions implements ActionInterface {
         const response = "Response";
         console.log("STM Ended this was the input ---- for function " + this.Function);
         console.log(this.InputObject);
-
         return this.InputObject; // [this.Function][response];
     }
 }

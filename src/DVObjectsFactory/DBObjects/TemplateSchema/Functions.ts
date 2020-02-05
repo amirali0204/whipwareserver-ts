@@ -1,15 +1,23 @@
-import { model, Schema} from "mongoose";
-export const Functions = new Schema(
-    {
-      id: String,
-      FunName: String,
-      Type: String, // graphQL, Websocket
-      InputAttribute: [{DVObject: String}],
-      OutputAttribute: [{DVObject: String}],
-      SysActionID: String,
-      ResolversSchema: String,
-      EnterpriseID: String,
-      AppID: String
-    },
-    { timestamps: true }
-  );
+export const m_Functions = {
+  DVID: String,
+  FunctionName: String,
+  Type: String, // graphQL, Websocket
+  EnterpriseID: String,
+  AppID: [String], // list of all appID it will be allowed This is ACL done
+  Relation: [{// These users, Groups and Roles can be given any above mentioned Relation
+    Name: String,
+    Users: [String],
+    Groups: [String],
+    Roles: [String],
+    AppIDs: [String],
+    EnterpriseID: String
+  }]
+};
+export const m_FunctionsQueries = {
+  FindByFunctionName: {
+    FunctionName: "FunctionNameValue"
+  },
+  FindByFunctionNameArgs: [
+        "FunctionName"
+  ]
+};

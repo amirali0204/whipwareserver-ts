@@ -34,7 +34,6 @@ class DBActions {
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(`DBAction: (${this.SysAction}) for the function : (${this.m_Function})`);
-            //   console.log("Input Data- " + JSON.stringify(this.InputObject));
             let DVObjectsFactory;
             DVObjectsFactory = new DBObjectCreator_1.DBObjectCreator(this.m_Function);
             let dbObject = {};
@@ -85,7 +84,6 @@ class DBActions {
                     const query = Schamatable.find(Querybuilder);
                     yield query.then((result) => {
                         this.OutputObject = result;
-                        //     console.log("EXEC FIND Query for Function - " + this.m_Function);
                     });
                     break;
                 }

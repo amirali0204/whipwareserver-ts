@@ -7,12 +7,12 @@ exports.m_isAdminEnterpriseActive = {
                         fact: "EnterpriseManagement",
                         operator: "equal",
                         value: "Active",
-                        path: "$.[0].State"
+                        path: "$.Response[0].State"
                     }, {
                         fact: "EnterpriseManagement",
                         operator: "equal",
                         value: "Admin",
-                        path: "$.[0].Type"
+                        path: "$.Response[0].Type"
                     }]
             }]
     },

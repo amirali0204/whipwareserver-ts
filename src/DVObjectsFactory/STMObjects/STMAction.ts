@@ -1,5 +1,4 @@
 import {DVObjectInterface} from "../DVObjectInterface";
-import {DVStateActions} from "./Templates";
 export class STMAction implements DVObjectInterface {
     public objectID: string;
     constructor(ID: string) {
@@ -7,6 +6,6 @@ export class STMAction implements DVObjectInterface {
     }
     public createObject(): Object {
         // STM objects will be loaded from Template files or DB
-        return DVStateActions[this.objectID];
+        return new Object(); // DVStateActions[this.objectID];
     }
 }

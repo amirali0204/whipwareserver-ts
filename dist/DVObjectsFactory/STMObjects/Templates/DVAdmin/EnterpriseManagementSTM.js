@@ -17,16 +17,13 @@ exports.m_EnterpriseManagement = {
         Actions: {
             on: {
                 CREATE: {
-                    target: "created",
-                    actions: ["CreateEnterprise"]
+                    target: "created"
                 },
                 UPDATE: {
-                    target: "updated",
-                    actions: ["UpdateEnterprise"]
+                    target: "updated"
                 },
                 DELETE: {
-                    target: "deleted",
-                    actions: ["DeleteEnterprise"]
+                    target: "deleted"
                 },
                 FIND: {
                     target: "fetch"
@@ -45,11 +42,9 @@ exports.m_EnterpriseManagement = {
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () { return yield STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", ""); }),
                 onDone: {
                     target: "fetched"
-                    //  actions: assign({ user: (context, event) => event.data })
                 },
                 onError: {
                     target: "fetched"
-                    //  actions: assign({ error: (context, event) => event.data })
                 }
             }
         },
@@ -66,25 +61,5 @@ exports.m_EnterpriseManagement = {
             type: "final"
         }
     },
-};
-exports.m_EnterpriseManagementActions = {
-    actions: {
-        // action implementations
-        CreateEnterprise: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
-        },
-        UpdateEnterprise: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
-        },
-        DeleteEnterprise: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
-        },
-        FindEnterprise: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
-        },
-        FindEnterpriseByName: (context, event) => {
-            STMAction_1.STMActions.ExecuteAction("EnterpriseManagement", context, event, "DBAction", "");
-        }
-    }
 };
 //# sourceMappingURL=EnterpriseManagementSTM.js.map
