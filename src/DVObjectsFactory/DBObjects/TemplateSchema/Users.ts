@@ -4,11 +4,22 @@ export const m_Users = {
     Role: [String], // Admin , B2B, B2C
     Groups: [String],
     State: String, // lifecycle of an User Object need to design in STM
-    UserName: String,
+    UserName: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+    },
     Password: String,
     FirstName: String,
     LastName: String,
     FullName: String,
+    Tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }],
     Relation: [{// These users, Groups and Roles can be given any above mentioned Relation
         Name: String,
         Users: [String],
@@ -25,8 +36,8 @@ export const m_UsersQueries = {
     FindByNameArgs: [
           "FirstName"
     ],
-    FindByUserName: {
-        UserName: "UserNameValue"
+    FindByCred: {
+        UserName: "UserNameValue",
     },
-    FindByUserNameArgs: ["UserName"]
+    FindByCredArgs: ["UserName"]
 };

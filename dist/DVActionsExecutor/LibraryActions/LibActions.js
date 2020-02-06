@@ -13,6 +13,7 @@ const ActionObjectCreator_1 = require("../../DVObjectsFactory/LibActionObjects/A
 const ActionStrategy_1 = require("./ActionStrategy");
 const InputPreparer_1 = require("./Data/InputPreparer");
 const OutputPreparer_1 = require("./Data/OutputPreparer");
+const PasswordConvertor_1 = require("./Security/PasswordConvertor");
 class LibAction {
     constructor(action, context, m_function, target, targetfunc) {
         this.LibFunction = m_function;
@@ -23,16 +24,11 @@ class LibAction {
     }
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
-            //    console.log(`LibAction Execution for Function:(${this.LibFunction})`);
-            //    console.log(`LibAction Execution with Action:(${this.DVFunction})`);
-            //    console.log(`LibAction Execution for Input:(${JSON.stringify(this.InputObject)})`);
             if (this.LibFunction === "PrepareInput") {
                 let DVObjectsFactory;
                 DVObjectsFactory = new ActionObjectCreator_1.ActionObjectCreator(this.DVFunction);
                 let dbObject = {};
                 dbObject = DVObjectsFactory.createObject();
-                //        console.log("This is the Libaction Prepare Input following DB object - ");
-                //        console.log(dbObject);
                 const context = new ActionStrategy_1.ActionStrategy(new InputPreparer_1.InputPreparer(dbObject, this.InputObject));
                 const objectret = context.LibraryAction();
                 const exefunc = "ExecutorFunction";
@@ -50,6 +46,17 @@ class LibAction {
                 dbObject = DVObjectsFactory.createObject();
                 const context = new ActionStrategy_1.ActionStrategy(new OutputPreparer_1.OutputPreparer(dbObject, this.InputObject));
                 const objectret = context.LibraryAction();
+                const exefunc = "ExecutorFunction";
+                const exeact = "ExecutorAction";
+                objectret[exefunc] = this.TargetFunc;
+                objectret[exeact] = this.Target;
+                return objectret;
+            }
+            else if (this.LibFunction === "ConvertPassword") {
+                console.log("This is ConvertPassword for function =----- " + this.DVFunction + "Resp");
+                console.log(this.InputObject);
+                const context = new ActionStrategy_1.ActionStrategy(new PasswordConvertor_1.PasswordConvertor(this.InputObject));
+                const objectret = yield context.LibraryAction();
                 const exefunc = "ExecutorFunction";
                 const exeact = "ExecutorAction";
                 objectret[exefunc] = this.TargetFunc;

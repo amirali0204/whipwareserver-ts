@@ -4,6 +4,7 @@ import {ActionInterface} from "../ActionInterface";
 import {ActionStrategy} from "./ActionStrategy";
 import { InputPreparer } from "./Data/InputPreparer";
 import { OutputPreparer } from "./Data/OutputPreparer";
+import { PasswordConvertor } from "./Security/PasswordConvertor";
 export class LibAction implements ActionInterface {
     private LibFunction: string;
     private DVFunction: string;
@@ -18,16 +19,11 @@ export class LibAction implements ActionInterface {
         this.TargetFunc = targetfunc;
     }
     public async execute(): Promise<object | undefined> {
-    //    console.log(`LibAction Execution for Function:(${this.LibFunction})`);
-    //    console.log(`LibAction Execution with Action:(${this.DVFunction})`);
-    //    console.log(`LibAction Execution for Input:(${JSON.stringify(this.InputObject)})`);
         if (this.LibFunction === "PrepareInput") {
             let DVObjectsFactory: DVObjectCreator;
             DVObjectsFactory = new ActionObjectCreator(this.DVFunction);
             let dbObject = {};
             dbObject = DVObjectsFactory.createObject();
-    //        console.log("This is the Libaction Prepare Input following DB object - ");
-    //        console.log(dbObject);
             const context = new ActionStrategy(new InputPreparer(dbObject, this.InputObject));
             const objectret =  context.LibraryAction();
             const exefunc = "ExecutorFunction";
@@ -45,6 +41,16 @@ export class LibAction implements ActionInterface {
             dbObject = DVObjectsFactory.createObject();
             const context = new ActionStrategy(new OutputPreparer(dbObject, this.InputObject));
             const objectret =  context.LibraryAction();
+            const exefunc = "ExecutorFunction";
+            const exeact = "ExecutorAction";
+            objectret[exefunc] = this.TargetFunc;
+            objectret[exeact] = this.Target;
+            return objectret;
+        } else if (this.LibFunction === "ConvertPassword") {
+            console.log("This is ConvertPassword for function =----- " + this.DVFunction + "Resp");
+            console.log(this.InputObject);
+            const context = new ActionStrategy(new PasswordConvertor(this.InputObject));
+            const objectret =  await context.LibraryAction();
             const exefunc = "ExecutorFunction";
             const exeact = "ExecutorAction";
             objectret[exefunc] = this.TargetFunc;

@@ -54,7 +54,7 @@ function bootstrapGraph() {
             playground: true,
         });
         // Start the server
-        const { url } = yield server.listen(8081);
+        const { url } = yield server.listen(8080);
         console.log(`Server is running, GraphQL Playground available at ${url} `);
     });
 }

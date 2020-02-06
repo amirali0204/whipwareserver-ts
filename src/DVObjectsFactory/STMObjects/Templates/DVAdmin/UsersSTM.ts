@@ -7,42 +7,34 @@ export const m_Users = {
           on: {
               CREATE: {
                 target: "created",
-                actions: ["CreateUser"]
               },
               UPDATE: {
                 target: "updated",
-                actions: ["UpdateUser"]
               },
               DELETE: {
                 target: "deleted",
-                actions: ["DeleteUser"]
               },
               FIND: {
                 target: "fetch"
               },
-              FindByName: {
-                target: "fetch"
-              },
-              FindByType: {
-                target: "fetch"
-              }
+              FindByCred: "fetch"
           }
       },
+
       fetch: {
         invoke: {
-          id: "getUsers",
+          id: "fetch",
           src: async (context, event) => await STMActions.ExecuteAction("Users", context, event, "DBAction", "")
           ,
           onDone: {
             target: "fetched"
-          //  actions: assign({ user: (context, event) => event.data })
           },
           onError: {
             target: "fetched"
-          //  actions: assign({ error: (context, event) => event.data })
           }
         }
       },
+
       created: {
           type: "final"
       },
@@ -55,5 +47,5 @@ export const m_Users = {
       fetched: {
         type: "final"
       }
-  },
+  }
 };

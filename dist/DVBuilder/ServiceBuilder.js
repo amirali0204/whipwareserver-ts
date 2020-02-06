@@ -43,17 +43,18 @@ class DVBuilder {
             const Schamatable = mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().model(m_Function, m_schema);
             // No Relation this enterprise is immutable;
             const EnterpriseId = uuid();
-            const admin = { EnterpriseName: "DVAdmin", Type: "Admin", State: "Active", DVID: EnterpriseId, Relation: {} };
+            const Enterprisename = "DVAdmin";
+            const EntID = EnterpriseId.split("-")[0];
+            const admin = { EnterpriseName: Enterprisename, Type: "Admin", State: "Active", DVID: EnterpriseId, Relation: {} };
             const adminquery = { Type: "Admin" };
-            const query = Schamatable.find(adminquery);
-            const EnterpriseName = "EnterpriseName";
+            const query = Schamatable.findOne(adminquery);
             yield query.then((result) => {
-                console.log("EXEC FIND Query for Function - " + m_Function + " result - " + result);
-                if (result[EnterpriseName] === undefined) {
+                console.log("EXEC FIND Query for Function - " + m_Function + " result - " + result + "  ");
+                if (result === null) {
                     console.log("EXEC FIND Query for Function - No Admin Enterprise Create 1");
                     // Creating Enterprise
-                    const NewRecord = new Schamatable(admin);
-                    NewRecord.save();
+                    const NewEnterprise = new Schamatable(admin);
+                    NewEnterprise.save();
                     // Create Application
                     const AppId = uuid();
                     const relation = [{
@@ -73,7 +74,7 @@ class DVBuilder {
                     if (mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().models[DBAppName] !== undefined) {
                         mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().deleteModel(DBAppName);
                     }
-                    const DBAppSchamatable = mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().model(DBAppName, m_schema);
+                    const DBAppSchamatable = mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().model(Enterprisename + EntID + DBAppName, m_schema);
                     console.log("EXEC Save Query for Application - No Admin Enterprise Create 2");
                     const NewApp = new DBAppSchamatable(App);
                     NewApp.save();
@@ -101,7 +102,7 @@ class DVBuilder {
                     if (mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().models[DBUserName] !== undefined) {
                         mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().deleteModel(DBUserName);
                     }
-                    const DBUserSchamatable = mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().model(DBUserName, m_schema);
+                    const DBUserSchamatable = mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().model(Enterprisename + EntID + DBUserName, m_schema);
                     console.log("EXEC Save Query for Admin User for DV ADMIN APP - No Admin Enterprise Create 3");
                     const NewAdmin = new DBUserSchamatable(AdminUser);
                     NewAdmin.save();
@@ -115,7 +116,8 @@ class DVBuilder {
                     if (mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().models[DBObjectName] !== undefined) {
                         mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().deleteModel(DBObjectName);
                     }
-                    const DBObjSchamatable = mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().model(DBObjectName, m_schema);
+                    const DBObjSchamatable = mongooseSingleton_1.MongoSingleton.getInstance().getDBConnectionHandler().model(Enterprisename + EntID + DBObjectName, m_schema);
+                    // ****************************************************/
                     // Building Enterprise Privacy and Permission Rules for Admin App
                     const Relationships = [{
                             Name: "Assignee",
@@ -134,7 +136,7 @@ class DVBuilder {
                             ActionsAllowed: ["FIND", "FindByType", "FindByName"]
                         }];
                     let ownerRights = {
-                        Users: [],
+                        Users: [UserId],
                         Roles: ["Admin"],
                         EnterpriseID: [EnterpriseId]
                     };
@@ -142,7 +144,7 @@ class DVBuilder {
                             Name: "DVID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -151,7 +153,7 @@ class DVBuilder {
                             Name: "EnterpriseName",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -160,7 +162,7 @@ class DVBuilder {
                             Name: "Type",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -169,7 +171,7 @@ class DVBuilder {
                             Name: "State",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -181,7 +183,7 @@ class DVBuilder {
                     NewEntObject.save();
                     // Application Permission Schema Tables
                     ownerRights = {
-                        Users: [],
+                        Users: [UserId],
                         Roles: ["Admin"],
                         EnterpriseID: [EnterpriseId]
                     };
@@ -189,7 +191,7 @@ class DVBuilder {
                             Name: "DVID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -198,7 +200,7 @@ class DVBuilder {
                             Name: "AppName",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -207,7 +209,7 @@ class DVBuilder {
                             Name: "EnterpriseID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -216,7 +218,7 @@ class DVBuilder {
                             Name: "State",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -228,7 +230,7 @@ class DVBuilder {
                     NewAppObject.save();
                     // Now Functions Permission Schema Tables
                     ownerRights = {
-                        Users: [],
+                        Users: [UserId],
                         Roles: ["Admin"],
                         EnterpriseID: [EnterpriseId]
                     };
@@ -236,7 +238,7 @@ class DVBuilder {
                             Name: "DVID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -245,7 +247,7 @@ class DVBuilder {
                             Name: "FunctionName",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -254,7 +256,7 @@ class DVBuilder {
                             Name: "Type",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -263,7 +265,7 @@ class DVBuilder {
                             Name: "EnterpriseID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -272,7 +274,7 @@ class DVBuilder {
                             Name: "AppID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -284,7 +286,7 @@ class DVBuilder {
                     NewFuncObject.save();
                     // Now Groups Permission Schema Tables
                     ownerRights = {
-                        Users: [],
+                        Users: [UserId],
                         Roles: ["Admin"],
                         EnterpriseID: [EnterpriseId]
                     };
@@ -292,7 +294,7 @@ class DVBuilder {
                             Name: "DVID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -301,7 +303,7 @@ class DVBuilder {
                             Name: "EnterpriseID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -310,7 +312,7 @@ class DVBuilder {
                             Name: "Users",
                             DataType: "Array",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -319,7 +321,7 @@ class DVBuilder {
                             Name: "Groups",
                             DataType: "Array",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -328,7 +330,7 @@ class DVBuilder {
                             Name: "GroupName",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -340,7 +342,7 @@ class DVBuilder {
                     NewGrpObject.save();
                     // Now UISystems Permission Schema Tables
                     ownerRights = {
-                        Users: [],
+                        Users: [UserId],
                         Roles: ["Admin"],
                         EnterpriseID: [EnterpriseId]
                     };
@@ -348,7 +350,7 @@ class DVBuilder {
                             Name: "DVID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -357,7 +359,7 @@ class DVBuilder {
                             Name: "ScreenName",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -366,7 +368,7 @@ class DVBuilder {
                             Name: "Type",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -375,7 +377,7 @@ class DVBuilder {
                             Name: "EnterpriseID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -384,7 +386,7 @@ class DVBuilder {
                             Name: "AppID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -393,7 +395,7 @@ class DVBuilder {
                             Name: "Components",
                             DataType: "Array",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -405,7 +407,7 @@ class DVBuilder {
                     NewUIObject.save();
                     // Now Users Permission Schema Tables
                     ownerRights = {
-                        Users: [],
+                        Users: [UserId],
                         Roles: ["Admin"],
                         EnterpriseID: [EnterpriseId]
                     };
@@ -413,7 +415,7 @@ class DVBuilder {
                             Name: "DVID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -422,7 +424,7 @@ class DVBuilder {
                             Name: "EnterpriseID",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -431,7 +433,7 @@ class DVBuilder {
                             Name: "Role",
                             DataType: "Array",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -440,7 +442,7 @@ class DVBuilder {
                             Name: "Groups",
                             DataType: "Array",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -449,7 +451,7 @@ class DVBuilder {
                             Name: "State",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -458,7 +460,7 @@ class DVBuilder {
                             Name: "UserName",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -467,7 +469,7 @@ class DVBuilder {
                             Name: "Password",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -476,7 +478,7 @@ class DVBuilder {
                             Name: "FirstName",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -485,7 +487,7 @@ class DVBuilder {
                             Name: "LastName",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]
@@ -494,7 +496,16 @@ class DVBuilder {
                             Name: "FullName",
                             DataType: "String",
                             Allowed: [{
-                                    Users: [],
+                                    Users: [UserId],
+                                    Groups: [],
+                                    Roles: ["Admin"],
+                                    EnterpriseID: [EnterpriseId]
+                                }]
+                        }, {
+                            Name: "Tokens",
+                            DataType: "Array",
+                            Allowed: [{
+                                    Users: [UserId],
                                     Groups: [],
                                     Roles: ["Admin"],
                                     EnterpriseID: [EnterpriseId]

@@ -1,5 +1,11 @@
 export const m_EnterpriseManagementFIND = {
-    DVID: ["String", 32, 32]
+    DVID: {
+        dataType: ["isDefined", "isString"],
+        doubleattribute: {
+            minLength: 5,
+            maxLength: 32
+        }
+    }
 };
 export const m_EnterpriseManagementCREATE = {};
 export const m_EnterpriseManagementUPDATE = {};

@@ -8,6 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ApplicationActions = __importStar(require("./ApplicationActions"));
+const Authenticate = __importStar(require("./AuthenticateAction"));
 const DBObjectActions = __importStar(require("./DBObjectActions"));
 const EnterpriseManagementActions = __importStar(require("./EnterpriseManagementActions"));
 const FunctionActions = __importStar(require("./FunctionActions"));
@@ -23,6 +24,8 @@ exports.DVActionObjects = {
     EnterpriseManagementFindByTypeResp: EnterpriseManagementActions.m_EnterpriseManagementFindByTypeResp,
     ValidateAdminEnterpriseValidate: EnterpriseManagementActions.m_ValidateAdminEnterpriseValidate,
     ValidateAdminEnterpriseValidateResp: EnterpriseManagementActions.m_ValidateAdminEnterpriseValidateResp,
+    AuthenticateLogin: Authenticate.m_AuthenticateLogin,
+    AuthenticateLoginResp: Authenticate.m_AuthenticateLoginResp,
     ApplicationsFIND: ApplicationActions.m_ApplicationsFIND,
     ApplicationsCREATE: ApplicationActions.m_ApplicationsCREATE,
     ApplicationsUPDATE: ApplicationActions.m_ApplicationsUPDATE,
@@ -55,7 +58,7 @@ exports.DVActionObjects = {
     UsersCREATE: UserActions.m_UsersCREATE,
     UsersUPDATE: UserActions.m_UsersUPDATE,
     UsersFindByName: UserActions.m_UsersFindByName,
-    UsersFindByType: UserActions.m_UsersFindByType,
-    UsersFindByTypeResp: UserActions.m_UsersFindByTypeResp
+    UsersFindByCred: UserActions.m_UsersFindByCred,
+    UsersFindByTypeResp: UserActions.m_UsersFindByCredResp,
 };
 //# sourceMappingURL=index.js.map

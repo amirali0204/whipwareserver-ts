@@ -1,7 +1,7 @@
 import { Field, Float, Int, ObjectType } from "type-graphql";
 import {FunctionScalar} from "./FunctionScalar";
 import {DVObjectScalar} from "./FunctionScalarType";
-@ObjectType({ description: "Object representing cooking recipe" })
+@ObjectType({ description: "" })
 export class FunctionObject {
   @Field()
   public EnterpriseID: string;

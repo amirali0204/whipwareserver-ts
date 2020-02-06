@@ -42,6 +42,7 @@ export class FunctionResolver {
     type = "ExecutorAction";
     DVRequest[type] = Input.Action;
     console.log(DVRequest);
+    console.log("This is executing function launcher----");
     const FunctionHandler = new STMActions("FunctionLauncher", "Launch", DVRequest);
     const STMInvoker = new ActionInvoker();
     STMInvoker.setAction(FunctionHandler);

@@ -24,6 +24,7 @@ export const m_FunctionLauncher = {
             invoke: {
                 id: "LaunchSTM",
                 src: async (context, event) => {
+                  console.log(context.ExecutorFunction + " thiiiiiiiffff " + context[context.ExecutorFunction] + " " + JSON.stringify(event));
                   await STMActions.ExecuteAction(context.ExecutorFunction, context[context.ExecutorFunction], event, "STMAction", "");
                 },
                 onDone: {

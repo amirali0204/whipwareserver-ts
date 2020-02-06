@@ -1,4 +1,5 @@
 import * as  ApplicationActions from "./ApplicationActions";
+import * as  Authenticate from "./AuthenticateAction";
 import * as  DBObjectActions from "./DBObjectActions";
 import * as  EnterpriseManagementActions from "./EnterpriseManagementActions";
 import * as  FunctionActions from "./FunctionActions";
@@ -16,6 +17,9 @@ export const DVActionObjects = {
 
     ValidateAdminEnterpriseValidate: EnterpriseManagementActions.m_ValidateAdminEnterpriseValidate,
     ValidateAdminEnterpriseValidateResp: EnterpriseManagementActions.m_ValidateAdminEnterpriseValidateResp,
+
+    AuthenticateLogin: Authenticate.m_AuthenticateLogin,
+    AuthenticateLoginResp: Authenticate.m_AuthenticateLoginResp,
 
     ApplicationsFIND: ApplicationActions.m_ApplicationsFIND,
     ApplicationsCREATE: ApplicationActions.m_ApplicationsCREATE,
@@ -54,6 +58,7 @@ export const DVActionObjects = {
     UsersCREATE: UserActions.m_UsersCREATE,
     UsersUPDATE: UserActions.m_UsersUPDATE,
     UsersFindByName: UserActions.m_UsersFindByName,
-    UsersFindByType: UserActions.m_UsersFindByType,
-    UsersFindByTypeResp: UserActions.m_UsersFindByTypeResp
+    UsersFindByCred: UserActions.m_UsersFindByCred,
+    UsersFindByTypeResp: UserActions.m_UsersFindByCredResp,
+
 };

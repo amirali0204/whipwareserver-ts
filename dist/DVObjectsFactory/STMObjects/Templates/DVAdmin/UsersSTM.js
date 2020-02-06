@@ -18,38 +18,28 @@ exports.m_Users = {
             on: {
                 CREATE: {
                     target: "created",
-                    actions: ["CreateUser"]
                 },
                 UPDATE: {
                     target: "updated",
-                    actions: ["UpdateUser"]
                 },
                 DELETE: {
                     target: "deleted",
-                    actions: ["DeleteUser"]
                 },
                 FIND: {
                     target: "fetch"
                 },
-                FindByName: {
-                    target: "fetch"
-                },
-                FindByType: {
-                    target: "fetch"
-                }
+                FindByCred: "fetch"
             }
         },
         fetch: {
             invoke: {
-                id: "getUsers",
+                id: "fetch",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () { return yield STMAction_1.STMActions.ExecuteAction("Users", context, event, "DBAction", ""); }),
                 onDone: {
                     target: "fetched"
-                    //  actions: assign({ user: (context, event) => event.data })
                 },
                 onError: {
                     target: "fetched"
-                    //  actions: assign({ error: (context, event) => event.data })
                 }
             }
         },
@@ -65,6 +55,6 @@ exports.m_Users = {
         fetched: {
             type: "final"
         }
-    },
+    }
 };
 //# sourceMappingURL=UsersSTM.js.map

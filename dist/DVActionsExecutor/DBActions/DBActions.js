@@ -59,7 +59,7 @@ class DBActions {
                     const query = Schamatable.findOne({ DVID: this.identifier });
                     yield query.then((result) => {
                         this.OutputObject = result;
-                        console.log("EXEC FIND Query for Function - " + this.m_Function);
+                        //  console.log("EXEC FIND Query for Function - " + this.m_Function);
                     });
                     break;
                 }
@@ -69,18 +69,19 @@ class DBActions {
                 }
                 default: {
                     // here it should not come its an error or security issue
-                    console.log("Here all Custom function Handled" + this.SysAction + "Queries");
+                    //    console.log(this.InputObject);
+                    //    console.log("Here all Custom function Handled" + this.SysAction + "Queries");
                     let DVObjectsFactory_2;
                     DVObjectsFactory_2 = new DBObjectQueriesCreator_1.DBObjectQueriesCreator(this.m_Function + "Queries");
                     let allQueries = {};
                     allQueries = DVObjectsFactory_2.createObject();
-                    console.log("This is the DB OBject query string - " + JSON.stringify(allQueries[this.SysAction]));
+                    //    console.log("This is the DB OBject query string - " + JSON.stringify(allQueries[this.SysAction]));
                     const Querybuilder = allQueries[this.SysAction];
                     const Argslist = allQueries[this.SysAction + "Args"];
                     for (const arg of Argslist) {
                         Querybuilder[arg] = this.InputObject[arg];
                     }
-                    console.log("Generated Query Builder - " + JSON.stringify(Querybuilder));
+                    //    console.log("Generated Query Builder - " + JSON.stringify(Querybuilder));
                     const query = Schamatable.find(Querybuilder);
                     yield query.then((result) => {
                         this.OutputObject = result;

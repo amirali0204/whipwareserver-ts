@@ -9,7 +9,8 @@ class ActionStrategy {
     }
     LibraryAction() {
         const result = this.strategy.doAlgorithm();
-        // console.log(result);
+        console.log(result);
+        console.log("This is Input prepared");
         return result;
     }
 }

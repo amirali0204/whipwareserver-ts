@@ -35,6 +35,7 @@ exports.m_FunctionLauncher = {
             invoke: {
                 id: "LaunchSTM",
                 src: (context, event) => __awaiter(void 0, void 0, void 0, function* () {
+                    console.log(context.ExecutorFunction + " thiiiiiiiffff " + context[context.ExecutorFunction] + " " + JSON.stringify(event));
                     yield STMAction_1.STMActions.ExecuteAction(context.ExecutorFunction, context[context.ExecutorFunction], event, "STMAction", "");
                 }),
                 onDone: {

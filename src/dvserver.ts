@@ -49,7 +49,7 @@ async function bootstrapGraph() {
     });
 
     // Start the server
-  const { url } =  await server.listen(8081);
+  const { url } =  await server.listen(8080);
   console.log(`Server is running, GraphQL Playground available at ${url} `);
  }
 

@@ -19,18 +19,20 @@ export class STMActions implements ActionInterface {
         const req = "Request";
         const exefunc = "ExecutorFunction";
         const exeact = "ExecutorAction";
-//        console.log("Event Occured - " + context[exefunc] + " of type - " + actionType + " for Function - " + context[exeact]);
-//        console.log("object context - " + JSON.stringify(context) );
+        console.log("Event Occured - " + context[exefunc] + " of type - " + actionType + " for Function - " + context[exeact]);
+        console.log("object context - " + JSON.stringify(context) );
 
         if (actionType === "DBAction") {
             const m_DBActions = new DBActions(context[req][act], context[req][dvobj][dvob], m_Function);
             actionInvoker.setAction(m_DBActions);
             context[resp] = await actionInvoker.doInvokeAction();
         } else if (actionType === "STMAction") {
+            console.log("thhhhh");
             const m_STMActions = new STMActions(context[exefunc], context[exeact], context);
             actionInvoker.setAction(m_STMActions);
             await actionInvoker.doInvokeAction();
         } else if (actionType === "STMActionLauncher") {
+            console.log("STM Launcher called for " + JSON.stringify(context));
             const m_STMActions = new STMActions("FunctionLauncher", "Launch", context);
             actionInvoker.setAction(m_STMActions);
             await actionInvoker.doInvokeAction();
@@ -41,11 +43,11 @@ export class STMActions implements ActionInterface {
             context[context[exefunc]] = {};
             context[context[exefunc]][resp] = await actionInvoker.doInvokeAction();
         } else if (actionType === "LibAction") {
+            console.log("This is the Lib Action - " + context[exefunc] + " " + m_Function);
             const m_RulesActions = new LibAction(context[exefunc] + context[exeact], context, m_Function, context[exeact], context[exefunc]);
             actionInvoker.setAction(m_RulesActions);
             context[context[exefunc]] = await actionInvoker.doInvokeAction();
-            console.log(context);
-            console.log("This is libAction Output = " + context[exefunc] );
+            console.log("Res This is the Lib Action - " + context[exefunc] + " " + m_Function);
         }
         return context;
     }
@@ -59,13 +61,12 @@ export class STMActions implements ActionInterface {
         this.InputObject = Input;
     }
     public async execute(): Promise<object | undefined> {
-   //     console.log(`StateMachine Execution for Function:(${this.Function})`);
-   //     console.log(`StateMachine Execution with Action:(${this.Action})`);
-    //    console.log(`StateMachine Execution for Input:(${JSON.stringify(this.InputObject)})`);
+        console.log(`StateMachine Execution for Function:(${this.Function})`);
+        console.log(`StateMachine Execution with Action:(${this.Action})`);
+        console.log(`StateMachine Execution for Input:(${JSON.stringify(this.InputObject)})`);
         let DVObjectsFactory: DVObjectCreator;
         DVObjectsFactory = new STMObjectCreator(this.Function);
         const dvMachine = DVObjectsFactory.createObject();
-
         const stm = Machine(dvMachine);
         const machine = stm.withContext(this.InputObject);
         await new Promise((resolve, reject) => {

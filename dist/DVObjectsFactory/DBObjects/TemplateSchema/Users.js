@@ -6,11 +6,22 @@ exports.m_Users = {
     Role: [String],
     Groups: [String],
     State: String,
-    UserName: String,
+    UserName: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+    },
     Password: String,
     FirstName: String,
     LastName: String,
     FullName: String,
+    Tokens: [{
+            token: {
+                type: String,
+                required: true
+            }
+        }],
     Relation: [{
             Name: String,
             Users: [String],
@@ -27,9 +38,9 @@ exports.m_UsersQueries = {
     FindByNameArgs: [
         "FirstName"
     ],
-    FindByUserName: {
-        UserName: "UserNameValue"
+    FindByCred: {
+        UserName: "UserNameValue",
     },
-    FindByUserNameArgs: ["UserName"]
+    FindByCredArgs: ["UserName"]
 };
 //# sourceMappingURL=Users.js.map
