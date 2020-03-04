@@ -1,8 +1,8 @@
 {
-  "name": "DVServer",
+  "name": "WWServer",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/dvserver.js",
+  "main": "dist/wwserver.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",

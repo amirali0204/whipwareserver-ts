@@ -1,0 +1,1 @@
+{"version":3,"file":"DBObject.js","sourceRoot":"","sources":["../../../src/ObjectsFactory/DBObjects/DBObject.ts"],"names":[],"mappings":";;AACA,qDAAyC;AACzC,MAAa,QAAQ;IAEjB,YAAY,EAAU;QAClB,IAAI,CAAC,QAAQ,GAAG,EAAE,CAAC;IACvB,CAAC;IACM,YAAY;QACf,OAAO,wBAAO,CAAC,IAAI,CAAC,QAAQ,CAAC,CAAC;IAClC,CAAC;CACJ;AARD,4BAQC"}

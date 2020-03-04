@@ -1,0 +1,1 @@
+{"version":3,"file":"STMObject.js","sourceRoot":"","sources":["../../../src/ObjectsFactory/STMObjects/STMObject.ts"],"names":[],"mappings":";;AACA,4CAA6C;AAC7C,MAAa,SAAS;IAElB,YAAY,EAAU;QAClB,IAAI,CAAC,SAAS,GAAG,EAAE,CAAC;IACxB,CAAC;IACM,YAAY;QACf,uDAAuD;QACvD,OAAO,2BAAe,CAAC,IAAI,CAAC,SAAS,CAAC,CAAC;IAC3C,CAAC;CACJ;AATD,8BASC"}

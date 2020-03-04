@@ -1,0 +1,1 @@
+{"version":3,"file":"STMAction.js","sourceRoot":"","sources":["../../../src/ObjectsFactory/STMObjects/STMAction.ts"],"names":[],"mappings":";;AACA,MAAa,SAAS;IAElB,YAAY,EAAU;QAClB,IAAI,CAAC,QAAQ,GAAG,EAAE,CAAC;IACvB,CAAC;IACM,YAAY;QACf,uDAAuD;QACvD,OAAO,IAAI,MAAM,EAAE,CAAC,CAAC,iCAAiC;IAC1D,CAAC;CACJ;AATD,8BASC"}

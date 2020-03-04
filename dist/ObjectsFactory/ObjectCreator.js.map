@@ -1,0 +1,1 @@
+{"version":3,"file":"ObjectCreator.js","sourceRoot":"","sources":["../../src/ObjectsFactory/ObjectCreator.ts"],"names":[],"mappings":";;AACA,MAAsB,aAAa;IAExB,YAAY;QACf,MAAM,QAAQ,GAAG,IAAI,CAAC,aAAa,EAAE,CAAC;QACtC,OAAO,QAAQ,CAAC,YAAY,EAAE,CAAC;IACnC,CAAC;CACJ;AAND,sCAMC"}
